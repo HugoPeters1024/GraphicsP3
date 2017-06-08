@@ -6,7 +6,7 @@ using OpenTK.Graphics.OpenGL;
 // minimal OpenTK rendering framework for UU/INFOGR
 // Jacco Bikker, 2016
 
-namespace Template_P3
+namespace template_P3
 {
 
     class Game
@@ -14,6 +14,7 @@ namespace Template_P3
         // member variables
         public Surface screen;                  // background surface for printing etc.
         Mesh mesh, floor;                       // a mesh to draw using OpenGL
+        SceneGraph sceneGraph;
         const float PI = 3.1415926535f;         // PI
         float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
@@ -24,7 +25,7 @@ namespace Template_P3
         ScreenQuad quad;                        // screen filling quad for post processing
         bool useRenderTarget = false;
 
-        public static Vector3 lightPos1 = new Vector3(0, 10f, 50f);
+        public static Vector3 lightPos1 = new Vector3(0, 10f, 10f);
         public static Vector3 lightPos2 = new Vector3(10f, 10f, 10f);
         public static Vector3 lightPos3 = new Vector3(10f, 10f, 10f);
         public static Vector3 lightPos4 = new Vector3(10f, 10f, 10f);
@@ -33,7 +34,8 @@ namespace Template_P3
         public void Init()
         {
             // load teapot
-            mesh = new Mesh("../../assets/teapot.obj");
+            sceneGraph = new SceneGraph();
+            sceneGraph.Add(mesh = new Mesh("../../assets/teapot.obj"));
             floor = new Mesh("../../assets/floor.obj");
             // initialize stopwatch
             timer = new Stopwatch();
@@ -81,7 +83,7 @@ namespace Template_P3
                 target.Bind();
 
                 // render scene to render target
-                mesh.Render(shader, transform, toWorld, wood);
+                sceneGraph.Render(shader, wood);
                 floor.Render(shader, transform, toWorld, wood);
 
                 // render quad
@@ -91,7 +93,7 @@ namespace Template_P3
             else
             {
                 // render scene directly to the screen
-                mesh.Render(shader, transform, toWorld, wood);
+                sceneGraph.Render(shader, wood);
                 floor.Render(shader, transform, toWorld, wood);
             }
         }

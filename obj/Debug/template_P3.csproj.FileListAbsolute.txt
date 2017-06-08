@@ -5,3 +5,10 @@ S:\GraphicsP3\bin\Debug\OpenTK.dll
 S:\GraphicsP3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache
 S:\GraphicsP3\obj\Debug\template_P3.exe
 S:\GraphicsP3\obj\Debug\template_P3.pdb
+D:\Drive\Graphics\P3\bin\Debug\template_P3.exe.config
+D:\Drive\Graphics\P3\obj\Debug\template_P3.exe
+D:\Drive\Graphics\P3\obj\Debug\template_P3.pdb
+D:\Drive\Graphics\P3\bin\Debug\template_P3.exe
+D:\Drive\Graphics\P3\bin\Debug\template_P3.pdb
+D:\Drive\Graphics\P3\bin\Debug\OpenTK.dll
+D:\Drive\Graphics\P3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache

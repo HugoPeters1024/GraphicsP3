@@ -5,7 +5,7 @@ using System.Threading;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace Template_P3 {
+namespace template_P3 {
 
 public class OpenTKApp : GameWindow
 {
