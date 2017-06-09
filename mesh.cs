@@ -72,7 +72,16 @@ namespace template_P3
             GL.ProgramUniform3(shader.programID, shader.uniform_lpos2, Game.lightPos2.X, Game.lightPos2.Y, Game.lightPos2.Z);
             GL.ProgramUniform3(shader.programID, shader.uniform_lpos3, Game.lightPos3.X, Game.lightPos3.Y, Game.lightPos3.Z);
             GL.ProgramUniform3(shader.programID, shader.uniform_lpos4, Game.lightPos4.X, Game.lightPos4.Y, Game.lightPos4.Z);
-        
+
+            // pass the lightcolors to the shader
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol1, Game.lightCol1.X, Game.lightCol1.Y, Game.lightCol1.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol2, Game.lightCol2.X, Game.lightCol2.Y, Game.lightCol2.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol3, Game.lightCol3.X, Game.lightCol3.Y, Game.lightCol3.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol4, Game.lightCol4.X, Game.lightCol4.Y, Game.lightCol4.Z);
+
+            // pass the ambient lightcolor to the shader
+            GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, Game.ambientCol.X, Game.ambientCol.Y, Game.ambientCol.Z);
+
             // bind interleaved vertex data
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBufferId);
@@ -126,5 +135,4 @@ namespace template_P3
             public int Index0, Index1, Index2, Index3;
         }
     }
-
 } // namespace Template_P3
