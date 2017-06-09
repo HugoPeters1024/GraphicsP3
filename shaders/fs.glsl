@@ -3,17 +3,12 @@
 // shader input
 in vec2 uv;						// interpolated texture coordinates
 in vec4 normal;					// interpolated normal
+in vec4 worldPos;
 uniform sampler2D pixels;		// texture sampler
 
 // shader output
 out vec4 outputColor;
 
-<<<<<<< Updated upstream
-// fragment shader
-void main()
-{
-    outputColor = texture( pixels, uv ) + 0.5f * vec4( normal.xyz, 1 );
-=======
 uniform vec3 lightPos1;
 uniform vec3 lightPos2;
 uniform vec3 lightPos3;
@@ -54,6 +49,8 @@ void main()
 	float attenuation4 = 1.0f / (dist4 * dist4);
 
 	vec3 materialColor = texture( pixels, uv ).xyz;
-	outputColor = (vec4( materialColor * max( 0.0f, dot( L1, normal.xyz ) ) * attenuation1 * lightCol1, 1 ) + vec4( materialColor * max( 0.0f, dot( L2, normal.xyz ) ) * attenuation2 * lightCol2, 1 ) + vec4( materialColor * max( 0.0f, dot( L3, normal.xyz ) ) * attenuation3 * lightCol3, 1 ) + vec4( materialColor * max( 0.0f, dot( L4, normal.xyz ) ) * attenuation4 * lightCol4, 1 )) / 4;
->>>>>>> Stashed changes
+	outputColor = (vec4( materialColor * max( 0.0f, dot( L1, normal.xyz ) ) * attenuation1 * lightCol1, 1 )
+	+ vec4( materialColor * max( 0.0f, dot( L2, normal.xyz ) ) * attenuation2 * lightCol2, 1 ) 
+	+ vec4( materialColor * max( 0.0f, dot( L3, normal.xyz ) ) * attenuation3 * lightCol3, 1 ) 
+	+ vec4( materialColor * max( 0.0f, dot( L4, normal.xyz ) ) * attenuation4 * lightCol4, 1 )) / 4;
 }
