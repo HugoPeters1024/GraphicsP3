@@ -8,6 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Template_P3 {
 
+<<<<<<< Updated upstream
 class Game
 {
 	// member variables
@@ -42,6 +43,50 @@ class Game
 		target = new RenderTarget( screen.width, screen.height );
 		quad = new ScreenQuad();
    	}
+=======
+        public static Vector3 lightPos1 = new Vector3(0, 10f, 50f);
+        public static Vector3 lightPos2 = new Vector3(-15f, 10f, 10f);
+        public static Vector3 lightPos3 = new Vector3(0f, 10f, 10f);
+        public static Vector3 lightPos4 = new Vector3(15f, 10f, 10f);
+
+        public static Vector3 lightCol1 = new Vector3(10f, 10f, 8f);
+        public static Vector3 lightCol2 = new Vector3(10f, 0f, 0f);
+        public static Vector3 lightCol3 = new Vector3(0f, 10f, 0f);
+        public static Vector3 lightCol4 = new Vector3(0f, 0f, 50f);
+
+        public static Vector3 ambientCol = new Vector3(1f);
+
+        // initialize
+        public void Init()
+        {
+            // load teapot
+            mesh = new Mesh("../../assets/teapot.obj");
+            floor = new Mesh("../../assets/floor.obj");
+            // initialize stopwatch
+            timer = new Stopwatch();
+            timer.Reset();
+            timer.Start();
+            // create shaders
+            shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
+            postproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_post.glsl");
+            // load a texture
+            wood = new Texture("../../assets/wood.jpg");
+            // create the render target
+            target = new RenderTarget(screen.width, screen.height);
+            quad = new ScreenQuad();
+        }
+
+        // tick for background surface
+        public void Tick()
+        {
+            screen.Clear(0);
+            screen.Print("hello world", 2, 2, 0xffff00);
+            //lightCol1.X += 0.01f;
+            //lightCol1.Y -= 0.01f;
+            //lightCol1.Z -= 0.01f;
+            lightPos1.Z -= 0.1f;
+        }
+>>>>>>> Stashed changes
 
 	// tick for background surface
 	public void Tick()
