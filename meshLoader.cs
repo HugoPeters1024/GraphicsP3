@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using OpenTK;
 
-namespace Template_P3 {
+namespace template_P3 {
 
 // mesh and loader based on work by JTalton; http://www.opentk.com/node/642
 

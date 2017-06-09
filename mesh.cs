@@ -2,8 +2,9 @@
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 
-namespace Template_P3
+namespace template_P3
 {
 
     // mesh and loader based on work by JTalton; http://www.opentk.com/node/642
@@ -17,6 +18,7 @@ namespace Template_P3
         int vertexBufferId;                     // vertex buffer
         int triangleBufferId;                   // triangle buffer
         int quadBufferId;                       // quad buffer
+        Matrix4 modelView;
 
         // constructor
         public Mesh(string fileName)
