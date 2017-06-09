@@ -12,32 +12,33 @@ namespace template_P3
         Mesh myMesh;
         GameObject parent;
         List<GameObject> children;
-        Shader shader;
         protected Matrix4 transform, toWorld;
-        protected float rotation;
+        protected Vector3 rotation;
         protected Vector3 position;
+        protected Vector3 scale;
 
         public GameObject(Mesh m, GameObject parent = null)
         {
             myMesh = m;
             this.parent = parent;
             children = new List<GameObject>();
-            rotation = 0f;
+            rotation = Vector3.Zero;
             position = Vector3.Zero;
             toWorld = Matrix4.Identity;
             transform = Matrix4.Identity;
+            scale = Vector3.One;
         }
 
-        public void Render(Shader shader, Texture texture)
+        public void Render(Matrix4 camera, Shader shader, Texture texture)
         {
             Console.WriteLine(GlobalPosition);
-            transform = GlobalTransform;
+            transform = GlobalTransform * camera;
             toWorld = transform;
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
 
             myMesh.Render(shader, transform, toWorld, texture);
             foreach (GameObject n in children)
-                n.Render(shader, texture);
+                n.Render(camera, shader, texture);
         }
 
         #region Properties
@@ -57,7 +58,7 @@ namespace template_P3
             get { return parent; }
         }
 
-        public float Rotation
+        public Vector3 Rotation
         {
             get { return rotation; }
             set { rotation = value; }
@@ -72,20 +73,22 @@ namespace template_P3
         #region Transformations
         public Matrix4 LocalTransform
         {
-            get { return LocalRotation * LocalTranslation; }
+            get { return LocalScale * LocalRotation * LocalTranslation; }
         }
 
         public Matrix4 GlobalTransform
         {
             get
-            {      
+            {
                 if (parent == null)
                     return LocalTransform;
                 else
-                    return GlobalRotation * GlobalTranslation;
+                    return LocalTransform * parent.GlobalTransform;
             }
         }
+        #endregion
 
+        #region Translation
         public Matrix4 LocalTranslation
         {
             get { return Matrix4.CreateTranslation(-position); }
@@ -106,13 +109,15 @@ namespace template_P3
                 if (parent == null)
                     return position;
                 else
-                    return parent.GlobalPosition - position;
+                    return position + parent.GlobalPosition;
             }
         }
+        #endregion
 
+        #region Rotation
         public Matrix4 LocalRotation
         {
-            get { return Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), rotation); }
+            get {return Matrix4.CreateRotationX(rotation.X) * Matrix4.CreateRotationY(rotation.Y) * Matrix4.CreateRotationZ(rotation.Z); }
         }
         
         public Matrix4 GlobalRotation
@@ -123,6 +128,30 @@ namespace template_P3
                     return LocalRotation;
                 else
                     return LocalRotation * parent.GlobalRotation;
+            }
+        }
+        #endregion
+
+        #region Scale
+        public Vector3 Scale
+        {
+            get { return scale; }
+            set { scale = value; }
+        }
+
+        Matrix4 LocalScale
+        {
+            get { return Matrix4.CreateScale(scale); }
+        }
+
+        Matrix4 GlobalScale
+        {
+            get
+            {
+                if (parent == null)
+                    return LocalScale;
+                else
+                    return LocalScale * parent.GlobalScale;
             }
         }
         #endregion

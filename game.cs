@@ -13,12 +13,13 @@ namespace template_P3
     {
         // member variables
         public Surface screen;                  // background surface for printing etc.
-        Mesh mesh, floor;                       // a mesh to draw using OpenGL
+        GameObject floor;                       // a mesh to draw using OpenGL
         SceneGraph sceneGraph;
         const float PI = 3.1415926535f;         // PI
         float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
         Shader shader;                          // shader to use for rendering
+        Camera camera;                           // a camera
         Shader postproc;                        // shader to use for post processing
         Texture wood;                           // texture to use for rendering
         RenderTarget target;                    // intermediate render target
@@ -33,14 +34,17 @@ namespace template_P3
         // initialize
         public void Init()
         {
+            InputHandler.Init();
             // load teapot
             sceneGraph = new SceneGraph();
-            sceneGraph.Add(mesh = new Mesh("../../assets/teapot.obj"));
-            floor = new Mesh("../../assets/floor.obj");
+            //sceneGraph.Add(new GameObject(new Mesh("../../assets/teapot.obj")));
+            sceneGraph.Add(floor = new GameObject(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0) });
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
             timer.Start();
+
+            camera = new Camera();
             // create shaders
             shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
             postproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_post.glsl");
@@ -54,6 +58,8 @@ namespace template_P3
         // tick for background surface
         public void Tick()
         {
+            InputHandler.Update();
+            camera.Update();
             screen.Clear(0);
             screen.Print("hello world", 2, 2, 0xffff00);
             //lightPos1.Z -= 0.1f;
@@ -83,8 +89,7 @@ namespace template_P3
                 target.Bind();
 
                 // render scene to render target
-                sceneGraph.Render(shader, wood);
-                floor.Render(shader, transform, toWorld, wood);
+                sceneGraph.Render(camera, shader, wood);
 
                 // render quad
                 target.Unbind();
@@ -93,8 +98,7 @@ namespace template_P3
             else
             {
                 // render scene directly to the screen
-                sceneGraph.Render(shader, wood);
-                floor.Render(shader, transform, toWorld, wood);
+                sceneGraph.Render(camera, shader, wood);
             }
         }
     }

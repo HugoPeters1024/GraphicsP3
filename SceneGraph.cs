@@ -15,23 +15,23 @@ namespace template_P3
         public SceneGraph()
         {
             topNode = new GameObject(new Mesh("../../assets/teapot.obj"));
-            topNode.Position = new Vector3(0, 4, 15);
             two = new GameObject(new Mesh("../../assets/teapot.obj"), topNode);
-            two.Position = new Vector3(0, 5, 0);
-        }
-
-        public void Render(Shader shader, Texture texture)
-        {
-            topNode.Rotation += 0.1f;
-            two.Rotation -= 0.2f;
-            topNode.Render(shader, texture);
-            //two.Render(shader, texture);
-        }
-
-        public void Add(Mesh m)
-        {
-            //topNode.Children.Add(new GameObject(m, topNode));
+            topNode.Position = new Vector3(0, 4, 7);
+            two.Position = new Vector3(0, 0, 3);
+            two.Scale = new Vector3(0.5f);
             topNode.Children.Add(two);
+        }
+
+        public void Render(Camera camera, Shader shader, Texture texture)
+        {
+            topNode.Rotation += new Vector3(0, 0.1f, 0);
+            two.Rotation -= new Vector3(0, 0.2f, 0.2f);
+            topNode.Render(camera.Transform, shader, texture);
+        }
+
+        public void Add(GameObject o)
+        {
+            topNode.Children.Add(o);
         }
     }
 }
