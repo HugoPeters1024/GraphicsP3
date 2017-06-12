@@ -18,7 +18,6 @@ namespace template_P3
         int vertexBufferId;                     // vertex buffer
         int triangleBufferId;                   // triangle buffer
         int quadBufferId;                       // quad buffer
-        Matrix4 modelView;
 
         // constructor
         public Mesh(string fileName)

@@ -31,7 +31,6 @@ namespace template_P3
 
         public void Render(Matrix4 camera, Shader shader, Texture texture)
         {
-            Console.WriteLine(GlobalPosition);
             transform = GlobalTransform * camera;
             toWorld = GlobalRotation;
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);

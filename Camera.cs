@@ -13,6 +13,7 @@ namespace template_P3
     {
         Vector3 position;
         Vector3 rotation;
+        static float walkSpeed = 0.1f;
 
         public Camera()
         {
@@ -22,18 +23,22 @@ namespace template_P3
 
         public void Update()
         {
+            float sphereX = (float)(Math.Cos(rotation.Y));
+            float sphereY = (float)(Math.Sin(rotation.Y));
+            Vector3 sphereVec = new Vector3(sphereY, 0, sphereX);
+            Console.WriteLine(sphereVec);
             #region Movement
             if (KeyDown(Key.W))
-                position -= new Vector3(0, 0, 0.1f);
+                position -= sphereVec * walkSpeed;
 
             if (KeyDown(Key.S))
-                position += new Vector3(0, 0, 0.1f);
+                position += sphereVec * walkSpeed;
 
             if (KeyDown(Key.A))
-                position -= new Vector3(0.1f, 0, 0);
+                position -= Vector3.Cross(Vector3.UnitY, sphereVec) * walkSpeed;
 
             if (KeyDown(Key.D))
-                position += new Vector3(0.1f, 0, 0);
+                position += Vector3.Cross(Vector3.UnitY, sphereVec) * walkSpeed;
             #endregion
 
             #region Rotation
