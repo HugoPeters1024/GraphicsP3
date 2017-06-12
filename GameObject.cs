@@ -33,7 +33,7 @@ namespace template_P3
         {
             Console.WriteLine(GlobalPosition);
             transform = GlobalTransform * camera;
-            toWorld = transform;
+            toWorld = GlobalRotation;
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
 
             myMesh.Render(shader, transform, toWorld, texture);

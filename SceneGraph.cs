@@ -11,15 +11,19 @@ namespace template_P3
     {
         GameObject topNode;
         GameObject two;
+        GameObject boi;
 
         public SceneGraph()
         {
             topNode = new GameObject(new Mesh("../../assets/teapot.obj"));
             two = new GameObject(new Mesh("../../assets/teapot.obj"), topNode);
+            boi = new GameObject(new Mesh("../../assets/teapot.obj"),two);
             topNode.Position = new Vector3(0, 4, 7);
             two.Position = new Vector3(0, 0, 3);
+            boi.Position = new Vector3(0, 2, 0);
             two.Scale = new Vector3(0.5f);
             topNode.Children.Add(two);
+            two.Children.Add(boi);
         }
 
         public void Render(Camera camera, Shader shader, Texture texture)

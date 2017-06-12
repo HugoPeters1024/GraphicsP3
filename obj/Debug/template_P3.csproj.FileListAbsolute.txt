@@ -12,3 +12,7 @@ D:\Drive\Graphics\P3\bin\Debug\template_P3.exe
 D:\Drive\Graphics\P3\bin\Debug\template_P3.pdb
 D:\Drive\Graphics\P3\bin\Debug\OpenTK.dll
 D:\Drive\Graphics\P3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache
+C:\Users\Hugo\Google Drive\Graphics\P3\bin\Debug\template_P3.exe.config
+C:\Users\Hugo\Google Drive\Graphics\P3\obj\Debug\template_P3.exe
+C:\Users\Hugo\Google Drive\Graphics\P3\obj\Debug\template_P3.pdb
+C:\Users\Hugo\Google Drive\Graphics\P3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache
