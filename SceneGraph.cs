@@ -10,29 +10,31 @@ namespace template_P3
     class SceneGraph
     {
         List<GameObject> nots;
-        GameObject topNode;
+        Model topNode;
         GameObject two;
         GameObject boi;
 
         public SceneGraph()
         {
             nots = new List<GameObject>();
-            topNode = new Model(new Mesh("../../assets/teapot.obj"));
+            topNode = new Model(new Mesh("../../assets/bunny.obj"), 0.2f);
+            topNode.MyScale = new Vector3(1f);
             Add(topNode);
-            two = new Model(new Mesh("../../assets/teapot.obj"));
-            boi = new Model(new Mesh("../../assets/teapot.obj"));
+            two = new Model(new Mesh("../../assets/teapot.obj"), 0.2f);
+            boi = new Model(new Mesh("../../assets/teapot.obj"), 0.2f);
             topNode.Position = new Vector3(0, 4, 7);
-            two.Position = new Vector3(0, 0, 3);
-            boi.Position = new Vector3(0, 2, 0);
+            two.Position = new Vector3(0, 2, 10);
+            boi.Position = new Vector3(0, -10, 0);
             two.Scale = new Vector3(0.5f);
             topNode.Add(two);
-            two.Add(boi);
+            Add(boi);
         }
 
         public void Render(Camera camera, Shader shader, Texture texture)
         {
             topNode.Rotation += new Vector3(0, 0.1f, 0);
-            two.Rotation -= new Vector3(0, 0.2f, 0.2f);
+            boi.Rotation -= new Vector3(0, 0.1f, 0);
+            two.Rotation += new Vector3(0, 0.1f, 0);
             foreach (GameObject o in nots)
             {
                 o.Render(camera.Transform, shader, texture);

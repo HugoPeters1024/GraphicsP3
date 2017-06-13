@@ -26,6 +26,9 @@ namespace template_P3
         public int uniform_lcol3;
         public int uniform_lcol4;
 
+        public int uniform_cpos;
+        public int uniform_gloss;
+
 
         // constructor
         public Shader(String vertexShader, String fragmentShader)
@@ -54,6 +57,10 @@ namespace template_P3
             uniform_lcol2 = GL.GetUniformLocation(programID, "lightCol2");
             uniform_lcol3 = GL.GetUniformLocation(programID, "lightCol3");
             uniform_lcol4 = GL.GetUniformLocation(programID, "lightCol4");
+
+            
+            uniform_cpos = GL.GetUniformLocation(programID, "camPos");
+            uniform_gloss = GL.GetUniformLocation(programID, "gloss");
         }
 
     // loading shaders

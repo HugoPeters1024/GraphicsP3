@@ -29,7 +29,7 @@ namespace template_P3
         public virtual void Render(Matrix4 camera, Shader shader, Texture texture)
         {
             transform = GlobalTransform * camera;
-            toWorld = GlobalRotation;
+            toWorld = transform;
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
         }
 
@@ -111,7 +111,7 @@ namespace template_P3
         #region Rotation
         public Matrix4 LocalRotation
         {
-            get {return Matrix4.CreateRotationX(rotation.X) * Matrix4.CreateRotationY(rotation.Y) * Matrix4.CreateRotationZ(rotation.Z); }
+            get { return Matrix4.CreateRotationZ(rotation.Z) * Matrix4.CreateRotationY(rotation.Y) * Matrix4.CreateRotationX(rotation.X); }
         }
         
         public Matrix4 GlobalRotation

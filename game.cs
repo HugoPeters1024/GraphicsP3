@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -31,12 +32,12 @@ namespace template_P3
         public static Vector3 lightPos3 = new Vector3(0f, 10f, 10f);
         public static Vector3 lightPos4 = new Vector3(15f, 10f, 10f);
 
-        public static Vector3 lightCol1 = new Vector3(60);
+        public static Vector3 lightCol1 = new Vector3(30);
         public static Vector3 lightCol2 = new Vector3(10f, 0f, 0f);
         public static Vector3 lightCol3 = new Vector3(0f, 10f, 0f);
-        public static Vector3 lightCol4 = new Vector3(0f, 0f, 80f);
+        public static Vector3 lightCol4 = new Vector3(0f, 0f, 10f);
 
-        public static Vector3 ambientCol = new Vector3(1f);
+        public static Vector3 ambientCol = new Vector3(0.2f);
 
         // initialize
         public void Init()
@@ -45,7 +46,7 @@ namespace template_P3
             // load teapot
             sceneGraph = new SceneGraph();
             //sceneGraph.Add(new GameObject(new Mesh("../../assets/teapot.obj")));
-            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0) });
+            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(100)});
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
@@ -60,11 +61,33 @@ namespace template_P3
             // create the render target
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
+
+            // pass the lightpos to the shader
+            GL.ProgramUniform3(shader.programID, shader.uniform_lpos1, Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lpos2, Game.lightPos2.X, Game.lightPos2.Y, Game.lightPos2.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lpos3, Game.lightPos3.X, Game.lightPos3.Y, Game.lightPos3.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lpos4, Game.lightPos4.X, Game.lightPos4.Y, Game.lightPos4.Z);
+
+            // pass the lightcolors to the shader
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol1, Game.lightCol1.X, Game.lightCol1.Y, Game.lightCol1.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol2, Game.lightCol2.X, Game.lightCol2.Y, Game.lightCol2.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol3, Game.lightCol3.X, Game.lightCol3.Y, Game.lightCol3.Z);
+            GL.ProgramUniform3(shader.programID, shader.uniform_lcol4, Game.lightCol4.X, Game.lightCol4.Y, Game.lightCol4.Z);
+
+            GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, ambientCol.X, ambientCol.Y, ambientCol.Z);
+
+            // pass the ambient lightcolor to the shader
+            GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, Game.ambientCol.X, Game.ambientCol.Y, Game.ambientCol.Z);
+
+            // pass the camera position to the shader
+            GL.ProgramUniform3(shader.programID, shader.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);
+
         }
 
         // tick for background surface
         public void Tick()
         {
+            Console.WriteLine(camera.Position);
             InputHandler.Update();
             camera.Update();
             screen.Clear(0);
