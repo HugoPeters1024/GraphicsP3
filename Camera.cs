@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Graphics.OpenGL;
 using static template_P3.InputHandler;
 
 namespace template_P3
@@ -21,6 +22,7 @@ namespace template_P3
             position = new Vector3(0, 0, 5);
             rotation = Vector3.Zero;
         }
+
 
         public void Update()
         {

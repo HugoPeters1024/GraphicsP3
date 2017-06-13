@@ -20,6 +20,12 @@ namespace template_P3
         int quadBufferId;                       // quad buffer
         public float gloss;
 
+        public static Mesh TeaPot = new Mesh("../../assets/teapot.obj");
+        public static Mesh Bunny = new Mesh("../../assets/bunny.obj");
+        public static Mesh F16 = new Mesh("../../assets/F16.obj");
+        public static Mesh Cube = new Mesh("../../assets/cube.obj");
+        public static Mesh Tyra = new Mesh("../../assets/tyra.obj");
+
         // constructor
         public Mesh(string fileName)
         {
@@ -68,9 +74,10 @@ namespace template_P3
             //pass gloss;
             GL.Uniform1(shader.uniform_gloss, gloss);
 
-            // pass transform to vertex shader
+            //pass transformations
             GL.UniformMatrix4(shader.uniform_mview, false, ref transform);
             GL.UniformMatrix4(shader.uniform_2wrld, false, ref toWorld);
+
 
 
             // bind interleaved vertex data

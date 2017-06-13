@@ -26,6 +26,8 @@ namespace template_P3
         public int uniform_lcol3;
         public int uniform_lcol4;
 
+        public int uniform_camTrans;
+
         public int uniform_cpos;
         public int uniform_gloss;
 
@@ -58,7 +60,8 @@ namespace template_P3
             uniform_lcol3 = GL.GetUniformLocation(programID, "lightCol3");
             uniform_lcol4 = GL.GetUniformLocation(programID, "lightCol4");
 
-            
+            uniform_camTrans = GL.GetUniformLocation(programID, "camTrans");
+
             uniform_cpos = GL.GetUniformLocation(programID, "camPos");
             uniform_gloss = GL.GetUniformLocation(programID, "gloss");
         }

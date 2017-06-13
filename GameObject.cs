@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace template_P3
 {
@@ -31,6 +32,9 @@ namespace template_P3
             transform = GlobalTransform * camera;
             toWorld = transform;
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
+
+            GL.UniformMatrix4(shader.uniform_mview, false, ref transform);
+            GL.UniformMatrix4(shader.uniform_2wrld, false, ref toWorld);
         }
 
         public void Add(GameObject o)

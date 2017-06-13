@@ -9,8 +9,6 @@ namespace template_P3
 {
     class Model : GameObject
     {
-        public static Texture texWood = new Texture("../../assets/wood.jpg");
-        public static Texture texF16 = new Texture("../../assets/F16s.bmp");
         Mesh myMesh;
         float gloss;
         Vector3 myScale;
@@ -21,7 +19,7 @@ namespace template_P3
             myMesh = m;
             myMesh.gloss = gloss;
             myScale = Vector3.One;
-            texture = texWood;
+            texture = Texture.texWood;
         }
 
         public override void Render(Matrix4 camera, Shader shader)

@@ -9,9 +9,12 @@ public class Texture
 {
 	// data members
 	public int id;
+        public static Texture White = new Texture("../../assets/White.png");
+        public static Texture texWood = new Texture("../../assets/wood.jpg");
+        public static Texture texF16 = new Texture("../../assets/F16s.bmp");
 
-	// constructor
-	public Texture( string filename )
+    // constructor
+        public Texture( string filename )
 	{
 		if (String.IsNullOrEmpty( filename )) throw new ArgumentException( filename );
 		id = GL.GenTexture();

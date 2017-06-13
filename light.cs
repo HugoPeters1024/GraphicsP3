@@ -7,6 +7,7 @@ namespace template_P3
     class Light : GameObject
     {
         Vector3 intensity;
+        static Mesh mesh = Mesh.Cube;
 
         public Light(Vector3 position)
         {
@@ -24,6 +25,12 @@ namespace template_P3
         {
             this.position = position;
             this.intensity = new Vector3(intensity);
+        }
+
+        public override void Render(Matrix4 camera, Shader shader)
+        {
+            base.Render(camera, shader);
+            mesh.Render(shader, transform, toWorld, Texture.White);
         }
 
         #region Properties

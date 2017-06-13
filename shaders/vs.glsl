@@ -11,6 +11,7 @@ out vec4 worldPos;
 out vec2 uv;			
 uniform mat4 transform;
 uniform mat4 toWorld;
+uniform mat4 camTrans;
  
 // vertex shader
 void main()
