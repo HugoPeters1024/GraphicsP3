@@ -38,9 +38,9 @@ void main()
 
 		//specular calc 1
 		camRay = normalize( worldPos.xyz - camPos );
-		r_camRay = reflect(camRay, normal);
-		float spec1 = dot(r_camRay, L1);
-		spec1 = pow(spec1, 250);
+		r_camRay = reflect(camRay, -normal);
+		float spec1 = max(0, dot(r_camRay, L1) );
+		spec1 = pow(spec1, 450);
 
 	// lightsource 2 calc
     vec3 L2 = lightPos2 - worldPos.xyz;
@@ -49,8 +49,8 @@ void main()
 	float attenuation2 = 1.0f / (dist2 * dist2);
 
 		//specular calc 2
-		float spec2 = dot(r_camRay, L2);
-		spec2 = pow(spec2, 250);
+		float spec2 = max(0 ,dot(r_camRay, L2) );
+		spec2 = pow(spec2, 450);
 
 	// lightsource 3 calc
     vec3 L3 = lightPos3 - worldPos.xyz;
@@ -60,7 +60,7 @@ void main()
 
 		//specular calc 3
 		float spec3 = dot(r_camRay, L3);
-		spec3 = pow(spec3, 250);
+		spec3 = max(0, pow(spec3, 450) );
 
 	// lightsource 4 calc
     vec3 L4 = lightPos4 - worldPos.xyz;
@@ -70,7 +70,7 @@ void main()
 
 		//specular calc 4
 		float spec4 = dot(r_camRay, L4);
-		spec4 = pow(spec4, 250);
+		spec4 = max(0, pow(spec4, 450) );
 
 
 
@@ -83,9 +83,9 @@ void main()
 	+ vec4( materialColor * max( 0.0f, dot( L3, normal ) ) * attenuation3 * lightCol3, 1 ) 
 	+ vec4( materialColor * max( 0.0f, dot( L4, normal ) ) * attenuation4 * lightCol4, 1 )) / 4;
 
-	outputColor += vec4( lightCol1 * vec3( spec1), 1) * gloss;
-	outputColor += vec4( lightCol2 * vec3( spec2), 1) * gloss;
-	outputColor += vec4( lightCol3 * vec3( spec3), 1) * gloss;
-	outputColor += vec4( lightCol4 * vec3( spec4), 1) * gloss;
+	outputColor += vec4( lightCol1 * vec3(spec1), 1) * gloss;
+	outputColor += vec4( lightCol2 * vec3(spec2), 1) * gloss;
+	outputColor += vec4( lightCol3 * vec3(spec3), 1) * gloss;
+	outputColor += vec4( lightCol4 * vec3(spec4), 1) * gloss;
 
 }

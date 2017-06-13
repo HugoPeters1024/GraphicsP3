@@ -14,6 +14,7 @@ namespace template_P3
         Vector3 position;
         Vector3 rotation;
         static float walkSpeed = 0.1f;
+        static float rotSpeed = 0.03f;
 
         public Camera()
         {
@@ -43,16 +44,16 @@ namespace template_P3
 
             #region Rotation
             if (KeyDown(Key.Left))
-                rotation += new Vector3(0, 0.01f, 0);
+                rotation += new Vector3(0, rotSpeed, 0);
 
             if (KeyDown(Key.Right))
-                rotation -= new Vector3(0, 0.01f, 0);
+                rotation -= new Vector3(0, rotSpeed, 0);
 
             if (KeyDown(Key.Up))
-                rotation += new Vector3(0.01f, 0, 0);
+                rotation += new Vector3(rotSpeed, 0, 0);
 
             if (KeyDown(Key.Down))
-                rotation -= new Vector3(0.01f, 0, 0);
+                rotation -= new Vector3(rotSpeed, 0, 0);
             #endregion
         }
 

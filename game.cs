@@ -27,10 +27,10 @@ namespace template_P3
         ScreenQuad quad;                        // screen filling quad for post processing
         bool useRenderTarget = false;
 
-        public static Vector3 lightPos1 = new Vector3(0, 10f, 10f);
-        public static Vector3 lightPos2 = new Vector3(-15f, 10f, 10f);
-        public static Vector3 lightPos3 = new Vector3(0f, 10f, 10f);
-        public static Vector3 lightPos4 = new Vector3(15f, 10f, 10f);
+        public static Vector3 lightPos1 = new Vector3(0, 0, 0);
+        public static Vector3 lightPos2 = new Vector3(-5, 0 ,0);
+        public static Vector3 lightPos3 = new Vector3(5, 0f, 0f);
+        public static Vector3 lightPos4 = new Vector3(0, 5f, 0f);
 
         public static Vector3 lightCol1 = new Vector3(30);
         public static Vector3 lightCol2 = new Vector3(10f, 0f, 0f);

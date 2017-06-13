@@ -22,19 +22,19 @@ namespace template_P3
             Add(topNode);
             two = new Model(new Mesh("../../assets/teapot.obj"), 0.2f);
             boi = new Model(new Mesh("../../assets/teapot.obj"), 0.2f);
-            topNode.Position = new Vector3(0, 4, 7);
+            topNode.Position = new Vector3(0, 0, 7);
             two.Position = new Vector3(0, 2, 10);
-            boi.Position = new Vector3(0, -10, 0);
+            boi.Position = new Vector3(10, 0, 0);
             two.Scale = new Vector3(0.5f);
             topNode.Add(two);
-            Add(boi);
+            two.Add(boi);
         }
 
         public void Render(Camera camera, Shader shader, Texture texture)
         {
-            topNode.Rotation += new Vector3(0, 0.1f, 0);
+            topNode.Rotation += new Vector3(0, 0.05f, 0);
             boi.Rotation -= new Vector3(0, 0.1f, 0);
-            two.Rotation += new Vector3(0, 0.1f, 0);
+            two.Rotation += new Vector3(0, 0.01f, 0);
             foreach (GameObject o in nots)
             {
                 o.Render(camera.Transform, shader, texture);
