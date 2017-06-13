@@ -46,7 +46,7 @@ namespace template_P3
             // load teapot
             sceneGraph = new SceneGraph();
             //sceneGraph.Add(new GameObject(new Mesh("../../assets/teapot.obj")));
-            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(100)});
+            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1)});
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
@@ -119,7 +119,7 @@ namespace template_P3
                 target.Bind();
 
                 // render scene to render target
-                sceneGraph.Render(camera, shader, wood);
+                sceneGraph.Render(camera, shader);
 
                 // render quad
                 target.Unbind();
@@ -128,7 +128,7 @@ namespace template_P3
             else
             {
                 // render scene directly to the screen
-                sceneGraph.Render(camera, shader, wood);
+                sceneGraph.Render(camera, shader);
             }
         }
     }

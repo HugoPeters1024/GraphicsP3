@@ -26,7 +26,7 @@ namespace template_P3
             scale = Vector3.One;
         }
 
-        public virtual void Render(Matrix4 camera, Shader shader, Texture texture)
+        public virtual void Render(Matrix4 camera, Shader shader)
         {
             transform = GlobalTransform * camera;
             toWorld = transform;
