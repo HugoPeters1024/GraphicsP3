@@ -45,7 +45,7 @@ namespace template_P3
             // load teapot
             sceneGraph = new SceneGraph();
             //sceneGraph.Add(new GameObject(new Mesh("../../assets/teapot.obj")));
-            sceneGraph.Add(floor = new GameObject(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0) });
+            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0) });
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();

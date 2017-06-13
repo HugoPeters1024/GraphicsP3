@@ -9,18 +9,15 @@ namespace template_P3
 {
     class GameObject
     {
-        Mesh myMesh;
-        GameObject parent;
-        List<GameObject> children;
+        protected GameObject parent;
+        protected List<GameObject> children;
         protected Matrix4 transform, toWorld;
         protected Vector3 rotation;
         protected Vector3 position;
         protected Vector3 scale;
 
-        public GameObject(Mesh m, GameObject parent = null)
+        public GameObject()
         {
-            myMesh = m;
-            this.parent = parent;
             children = new List<GameObject>();
             rotation = Vector3.Zero;
             position = Vector3.Zero;
@@ -29,22 +26,20 @@ namespace template_P3
             scale = Vector3.One;
         }
 
-        public void Render(Matrix4 camera, Shader shader, Texture texture)
+        public virtual void Render(Matrix4 camera, Shader shader, Texture texture)
         {
             transform = GlobalTransform * camera;
             toWorld = GlobalRotation;
             transform *= Matrix4.CreatePerspectiveFieldOfView(1.2f, 1.3f, .1f, 1000);
+        }
 
-            myMesh.Render(shader, transform, toWorld, texture);
-            foreach (GameObject n in children)
-                n.Render(camera, shader, texture);
+        public void Add(GameObject o)
+        {
+            o.parent = this;
+            children.Add(o);
         }
 
         #region Properties
-        public Mesh MyMesh
-        {
-            get { return myMesh; }
-        }
 
         public List<GameObject> Children
         {

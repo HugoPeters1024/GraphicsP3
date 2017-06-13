@@ -36,7 +36,7 @@ public class MeshLoader
         vertices = new List<Vector3>();
         normals = new List<Vector3>();
         texCoords = new List<Vector2>();
-         objVertices = new List<Mesh.ObjVertex>();
+        objVertices = new List<Mesh.ObjVertex>();
         objTriangles = new List<Mesh.ObjTriangle>();
         objQuads = new List<Mesh.ObjQuad>();
         string line;
@@ -87,6 +87,7 @@ public class MeshLoader
                 }
                 break;
             }
+
         }
         mesh.vertices = objVertices.ToArray();
         mesh.triangles = objTriangles.ToArray();

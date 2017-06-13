@@ -4,9 +4,8 @@ using OpenTK;
 
 namespace template_P3
 {
-    class Light
+    class Light : GameObject
     {
-        Vector3 position;
         Vector3 intensity;
 
         public Light(Vector3 position)
