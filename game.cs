@@ -46,10 +46,18 @@ namespace template_P3
         public void Init()
         {
             InputHandler.Init();
-            // load teapot
             sceneGraph = new SceneGraph();
-            //sceneGraph.Add(new GameObject(new Mesh("../../assets/teapot.obj")));
-            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.White, Gloss = 1f});
+            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
+
+            lights[0] = new Light(new Vector3(0, -10, 5), 220);
+            lights[1] = new Light(new Vector3(-5, 0, -5), new Vector3(30f, 0f, 0f));
+            lights[2] = new Light(new Vector3(5, 0f, -5), new Vector3(0f, 30f, 0f));
+            lights[3] = new Light(new Vector3(0, 0f, -5), new Vector3(0f, 0f, 30f));
+            for (int i = 0; i < lights.Length; i++)
+                sceneGraph.Add(lights[i]);
+
+
+            
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
@@ -65,11 +73,6 @@ namespace template_P3
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
-            sceneGraph.Add(new Light(lightPos1, lightCol1));
-            sceneGraph.Add(new Light(lightPos2, lightCol2));
-            sceneGraph.Add(new Light(lightPos3, lightCol3));
-            sceneGraph.Add(new Light(lightPos4, lightCol4));
-
             // pass the lightpos to the shader
             GL.ProgramUniform3(shader.programID, shader.uniform_lpos1, Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z );
             GL.ProgramUniform3(shader.programID, shader.uniform_lpos2, Game.lightPos2.X, Game.lightPos2.Y, Game.lightPos2.Z);
@@ -81,11 +84,6 @@ namespace template_P3
             GL.ProgramUniform3(shader.programID, shader.uniform_lcol2, Game.lightCol2.X, Game.lightCol2.Y, Game.lightCol2.Z);
             GL.ProgramUniform3(shader.programID, shader.uniform_lcol3, Game.lightCol3.X, Game.lightCol3.Y, Game.lightCol3.Z);
             GL.ProgramUniform3(shader.programID, shader.uniform_lcol4, Game.lightCol4.X, Game.lightCol4.Y, Game.lightCol4.Z);
-
-            for (int i = 0; i < 1; ++i)
-            {
-                GL.ProgramUniform3(shader.programID, shader.uniform_lightPos[i], Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z);
-            }
 
             //pass the light transformations to the shader
 
@@ -106,6 +104,7 @@ namespace template_P3
         // tick for background surface
         public void Tick()
         {
+            lights[1].Position += new Vector3(0, 0, 0.05f);
             Console.WriteLine(camera.Position);
             InputHandler.Update();
             camera.Update();
@@ -116,11 +115,12 @@ namespace template_P3
         // tick for OpenGL rendering code
         public void RenderGL()
         {
-            // pass the lightpos to the shader
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos1, Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos2, Game.lightPos2.X, Game.lightPos2.Y, Game.lightPos2.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos3, Game.lightPos3.X, Game.lightPos3.Y, Game.lightPos3.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos4, Game.lightPos4.X, Game.lightPos4.Y, Game.lightPos4.Z);
+            //Push the lights to the shader
+            for(int i=0; i<lights.Length; ++i)
+            {
+                GL.ProgramUniform3(shader.programID, shader.uniform_lightPos[i], lights[i].Position.X, lights[i].Position.Y, lights[i].Position.Z);
+                GL.ProgramUniform3(shader.programID, shader.uniform_lightCol[i], lights[i].Intensity.X, lights[i].Intensity.Y, lights[i].Intensity.Z);
+            }
 
             GL.ProgramUniform3(shader.programID, shader.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);
             Matrix4 camTrans = camera.Transform;

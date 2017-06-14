@@ -26,8 +26,6 @@ namespace template_P3
         {
             base.Render(camera, shader);
             myMesh.Render(shader, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture);
-            foreach (Model n in children)
-                n.Render(camera, shader);
         }
 
         #region Properties
