@@ -12,6 +12,7 @@ public class Texture
         public static Texture White = new Texture("../../assets/White.png");
         public static Texture texWood = new Texture("../../assets/wood.jpg");
         public static Texture texF16 = new Texture("../../assets/F16s.bmp");
+        public static Texture skybox = new Texture("../../assets/skybox.jpg");
 
     // constructor
         public Texture( string filename )

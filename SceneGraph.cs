@@ -17,9 +17,9 @@ namespace template_P3
         public SceneGraph()
         {
             nots = new List<GameObject>();
-            topNode = new Model(Mesh.Bunny, 0.8f);
-            topNode.Texture = Texture.White;
-            topNode.MyScale = new Vector3(1f);
+            topNode = new Model(Mesh.F16, 0.8f);
+            topNode.Texture = Texture.texF16;
+            topNode.MyScale = new Vector3(5f);
             Add(topNode);
             two = new Model(Mesh.TeaPot, 0.4f);
             boi = new Model(Mesh.Tyra, 0.1f);

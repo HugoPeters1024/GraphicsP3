@@ -69,6 +69,7 @@ namespace template_P3
             sceneGraph.Add(new Light(lightPos2, lightCol2));
             sceneGraph.Add(new Light(lightPos3, lightCol3));
             sceneGraph.Add(new Light(lightPos4, lightCol4));
+            sceneGraph.Add(new Skybox(Mesh.Skybox) { Texture = Texture.skybox, MyScale = new Vector3(30f), Position = new Vector3(15) });
 
             // pass the lightpos to the shader
             GL.ProgramUniform3(shader.programID, shader.uniform_lpos1, Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z );

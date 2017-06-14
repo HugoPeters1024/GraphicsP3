@@ -25,6 +25,7 @@ namespace template_P3
         public static Mesh F16 = new Mesh("../../assets/F16.obj");
         public static Mesh Cube = new Mesh("../../assets/cube.obj");
         public static Mesh Tyra = new Mesh("../../assets/tyra.obj");
+        public static Mesh Skybox = new Mesh("../../assets/skybox.obj");
 
         // constructor
         public Mesh(string fileName)
@@ -56,7 +57,7 @@ namespace template_P3
         }
 
         // render the mesh using the supplied shader and matrix
-        public void Render(Shader shader, Matrix4 transform, Matrix4 toWorld, Texture texture)
+        public void Render(Shader shader, Matrix4 transform, Matrix4 toWorld, Texture texture, bool skybox = false)
         {
             // on first run, prepare buffers
             Prepare(shader);
@@ -65,7 +66,12 @@ namespace template_P3
             int texLoc = GL.GetUniformLocation(shader.programID, "pixels");
             GL.Uniform1(texLoc, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, texture.id);
+            if (!skybox)
+                GL.BindTexture(TextureTarget.Texture2D, texture.id);
+            else
+            {
+                GL.BindTexture(TextureTarget.TextureCubeMap, texture.id);
+            }
 
 
             // enable shader
