@@ -26,6 +26,9 @@ namespace template_P3
         public int uniform_lcol3;
         public int uniform_lcol4;
 
+        public int[] uniform_lightPos = new int[4];
+        public int[] uniform_lightCol = new int[4];
+
         public int uniform_camTrans;
 
         public int uniform_cpos;
@@ -59,6 +62,12 @@ namespace template_P3
             uniform_lcol2 = GL.GetUniformLocation(programID, "lightCol2");
             uniform_lcol3 = GL.GetUniformLocation(programID, "lightCol3");
             uniform_lcol4 = GL.GetUniformLocation(programID, "lightCol4");
+
+            for (int i = 0; i < 4; i++)
+            {
+                uniform_lightPos[i] = GL.GetUniformLocation(programID, "lightPos[" + i.ToString() + "]");
+                uniform_lightCol[i] = GL.GetUniformLocation(programID, "lightCol[" + i.ToString() + "]");
+            }
 
             uniform_camTrans = GL.GetUniformLocation(programID, "camTrans");
 

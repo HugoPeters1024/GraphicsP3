@@ -22,7 +22,7 @@ namespace template_P3
             topNode.MyScale = new Vector3(1f);
             Add(topNode);
             two = new Model(Mesh.TeaPot, 0.4f);
-            boi = new Model(Mesh.Tyra, 1f);
+            boi = new Model(Mesh.Tyra, 0.1f);
             boi.MyScale = new Vector3(4f);
             topNode.Position = new Vector3(0, 0, 7);
             two.Position = new Vector3(0, 2, 10);
@@ -35,7 +35,7 @@ namespace template_P3
         public void Render(Camera camera, Shader shader)
         {
             topNode.Rotation += new Vector3(0f, 0.005f, 0);
-            //boi.Rotation -= new Vector3(0, 0.1f, 0);
+            boi.Rotation -= new Vector3(0, 0.1f, 0);
             two.Rotation += new Vector3(0.001f, 0.01f, 0.01f);
             foreach (GameObject o in nots)
             {

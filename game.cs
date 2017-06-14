@@ -28,17 +28,19 @@ namespace template_P3
         Matrix4 camTrans;
         bool useRenderTarget = false;
 
-        public static Vector3 lightPos1 = new Vector3(0, -2, 5);
+        public static Light[] lights = new Light[4];
+
+        public static Vector3 lightPos1 = new Vector3(0, -10, 5);
         public static Vector3 lightPos2 = new Vector3(-5, 0 ,-5);
         public static Vector3 lightPos3 = new Vector3(5, 0f, -5);
         public static Vector3 lightPos4 = new Vector3(0, 0f, -5);
 
-        public static Vector3 lightCol1 = new Vector3(60);
+        public static Vector3 lightCol1 = new Vector3(220);
         public static Vector3 lightCol2 = new Vector3(30f, 0f, 0f);
         public static Vector3 lightCol3 = new Vector3(0f, 30f, 0f);
         public static Vector3 lightCol4 = new Vector3(0f, 0f, 30f);
 
-        public static Vector3 ambientCol = new Vector3(0.4f);
+        public static Vector3 ambientCol = new Vector3(0.2f);
 
         // initialize
         public void Init()
@@ -47,7 +49,7 @@ namespace template_P3
             // load teapot
             sceneGraph = new SceneGraph();
             //sceneGraph.Add(new GameObject(new Mesh("../../assets/teapot.obj")));
-            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1)});
+            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.White, Gloss = 1f});
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
@@ -79,6 +81,11 @@ namespace template_P3
             GL.ProgramUniform3(shader.programID, shader.uniform_lcol2, Game.lightCol2.X, Game.lightCol2.Y, Game.lightCol2.Z);
             GL.ProgramUniform3(shader.programID, shader.uniform_lcol3, Game.lightCol3.X, Game.lightCol3.Y, Game.lightCol3.Z);
             GL.ProgramUniform3(shader.programID, shader.uniform_lcol4, Game.lightCol4.X, Game.lightCol4.Y, Game.lightCol4.Z);
+
+            for (int i = 0; i < 1; ++i)
+            {
+                GL.ProgramUniform3(shader.programID, shader.uniform_lightPos[i], Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z);
+            }
 
             //pass the light transformations to the shader
 
