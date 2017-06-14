@@ -25,9 +25,8 @@ namespace template_P3
         public override void Render(Matrix4 camera, Shader shader)
         {
             base.Render(camera, shader);
+
             myMesh.Render(shader, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture, this is Skybox);
-            foreach (Model n in children)
-                n.Render(camera, shader);
         }
 
         #region Properties
