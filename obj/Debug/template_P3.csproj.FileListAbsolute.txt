@@ -5,3 +5,10 @@ S:\GraphicsP3\bin\Debug\OpenTK.dll
 S:\GraphicsP3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache
 S:\GraphicsP3\obj\Debug\template_P3.exe
 S:\GraphicsP3\obj\Debug\template_P3.pdb
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\bin\Debug\template_P3.exe.config
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\obj\Debug\template_P3.exe
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\obj\Debug\template_P3.pdb
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\bin\Debug\template_P3.exe
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\bin\Debug\template_P3.pdb
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\bin\Debug\OpenTK.dll
+C:\Users\nikit\Documents\Uni jaar 1\Graphics\p3\obj\Debug\template_P3.csprojResolveAssemblyReference.cache
