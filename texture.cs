@@ -9,14 +9,20 @@ public class Texture
 {
 	// data members
 	public int id;
-        public static Texture White = new Texture("../../assets/White.png");
-        public static Texture texWood = new Texture("../../assets/wood.jpg");
-        public static Texture texF16 = new Texture("../../assets/F16s.png");
-        public static Texture skybox = new Texture("../../assets/skybox.jpg");
-        public static Texture texMetal = new Texture("../../assets/metal.jpg");
+        public static Texture White = new Texture("../../assets/textures/White.png");
+        public static Texture texWood = new Texture("../../assets/textures/wood.jpg");
+        public static Texture texF16 = new Texture("../../assets/textures/F16s.png");
+        public static Texture texMetal = new Texture("../../assets/textures/metal.jpg");
+
+        public static Texture skyboxDown = new Texture("../../assets/textures/skybox/bottom.jpg");
+        public static Texture skyboxUp = new Texture("../../assets/textures/skybox/top.jpg");
+        public static Texture skyboxLeft = new Texture("../../assets/textures/skybox/left.jpg");
+        public static Texture skyboxRight = new Texture("../../assets/textures/skybox/right.jpg");
+        public static Texture skyboxFront = new Texture("../../assets/textures/skybox/back.jpg");
+        public static Texture skyboxBack = new Texture("../../assets/textures/skybox/front.jpg");
 
 
-    // constructor
+        // constructor
         public Texture( string filename )
 	{
 		if (String.IsNullOrEmpty( filename )) throw new ArgumentException( filename );

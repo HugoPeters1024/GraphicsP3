@@ -82,6 +82,18 @@ namespace template_P3
                     Matrix4.CreateRotationX(-rotation.X);
             }
         }
+
+        public Matrix4 SkyboxTransform
+        {
+            get
+            {
+                return
+                    Matrix4.CreateTranslation(position) *
+                    Matrix4.CreateRotationZ(-rotation.Z) *
+                    Matrix4.CreateRotationY(-rotation.Y) *
+                    Matrix4.CreateRotationX(-rotation.X);
+            }
+        }
         #endregion
 
     }
