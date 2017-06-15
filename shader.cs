@@ -18,6 +18,7 @@ namespace template_P3
 
         public int[] uniform_lightPos = new int[4];
         public int[] uniform_lightCol = new int[4];
+        public int[] uniform_lightTrans = new int[4];
 
         public int uniform_camTrans;
 
@@ -47,6 +48,7 @@ namespace template_P3
             {
                 uniform_lightPos[i] = GL.GetUniformLocation(programID, "lightPos[" + i.ToString() + "]");
                 uniform_lightCol[i] = GL.GetUniformLocation(programID, "lightCol[" + i.ToString() + "]");
+                uniform_lightTrans[i] = GL.GetUniformLocation(programID, "lightTrans[" + i.ToString() + "]");
             }
 
             uniform_camTrans = GL.GetUniformLocation(programID, "camTrans");

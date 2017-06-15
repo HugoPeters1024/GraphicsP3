@@ -16,12 +16,20 @@ namespace template_P3
         protected Vector3 rotation;
         protected Vector3 position;
         protected Vector3 scale;
+        Vector3 rotationSpeed;
+        Vector3 translationSpeed;
 
-        public GameObject()
+        public GameObject() : this(Vector3.Zero)
+        {
+        }
+
+        public GameObject(Vector3 position)
         {
             children = new List<GameObject>();
             rotation = Vector3.Zero;
-            position = Vector3.Zero;
+            rotationSpeed = Vector3.Zero;
+            this.position = position;
+            translationSpeed = Vector3.Zero;
             toWorld = Matrix4.Identity;
             transform = Matrix4.Identity;
             scale = Vector3.One;
@@ -29,6 +37,9 @@ namespace template_P3
 
         public virtual void Render(Matrix4 camera, Shader shader)
         {
+            rotation += rotationSpeed;
+            position += translationSpeed;
+
             foreach (GameObject n in children)
                 n.Render(camera, shader);
 
@@ -65,10 +76,22 @@ namespace template_P3
             set { rotation = value; }
         }
 
+        public Vector3 RotationSpeed
+        {
+            get { return rotationSpeed; }
+            set { rotationSpeed = value; }
+        }
+
         public Vector3 Position
         {
             get { return position; }
             set { position = value; }
+        }
+
+        public Vector3 TranslationSpeed
+        {
+            get { return translationSpeed; }
+            set { translationSpeed = value; }
         }
 
         #region Transformations

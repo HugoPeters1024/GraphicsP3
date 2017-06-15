@@ -7,7 +7,7 @@ namespace template_P3
     class Light : GameObject
     {
         Vector3 intensity;
-        static Mesh mesh = Mesh.Cube;
+        static Mesh mesh = Mesh.Skybox;
 
         public Light(Vector3 position)
         {

@@ -51,12 +51,17 @@ namespace template_P3
             sceneGraph = new SceneGraph();
             sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
 
-            lights[0] = new Light(new Vector3(0, -10, 5), 120);
+            lights[0] = new Light(new Vector3(0, 0, 3), 120);
             lights[1] = new Light(new Vector3(-5, 0, -5), new Vector3(30f, 0f, 0f));
             lights[2] = new Light(new Vector3(5, 0f, -5), new Vector3(0f, 30f, 0f));
             lights[3] = new Light(new Vector3(0, 0f, -5), new Vector3(0f, 0f, 30f));
-            for (int i = 0; i < lights.Length; i++)
-                sceneGraph.Add(lights[i]);
+
+            GameObject obj = new GameObject(new Vector3(0, -4, 3));
+            obj.RotationSpeed = new Vector3(0, 0.01f, 0);
+            for (int i = 1; i < lights.Length; i++)
+                sceneGraph.Add(obj);
+            obj.Add(lights[0]);
+
 
 
             
@@ -75,7 +80,7 @@ namespace template_P3
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
-            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { Texture = Texture.skybox, MyScale = new Vector3(30f), Position = new Vector3(15) });
+            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { Texture = Texture.skybox, MyScale = new Vector3(40f), Position = new Vector3(15) });
             //pass the light transformations to the shader
 
 
@@ -105,11 +110,15 @@ namespace template_P3
         // tick for OpenGL rendering code
         public void RenderGL()
         {
+            GL.UseProgram(shader.programID);
             //Push the lights to the shader
-            for(int i=0; i<lights.Length; ++i)
+            Matrix4[] trans = new Matrix4[4];
+            for (int i=0; i<lights.Length; ++i)
             {
-                GL.ProgramUniform3(shader.programID, shader.uniform_lightPos[i], lights[i].Position.X, lights[i].Position.Y, lights[i].Position.Z);
-                GL.ProgramUniform3(shader.programID, shader.uniform_lightCol[i], lights[i].Intensity.X, lights[i].Intensity.Y, lights[i].Intensity.Z);
+                GL.Uniform3(shader.uniform_lightPos[i], lights[i].Position);
+                GL.Uniform3(shader.uniform_lightCol[i], lights[i].Intensity);
+                trans[i] = lights[i].GlobalTransform;
+                GL.UniformMatrix4(shader.uniform_lightTrans[i], false, ref trans[i]);
             }
 
             GL.ProgramUniform3(shader.programID, shader.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);

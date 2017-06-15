@@ -10,16 +10,16 @@ namespace template_P3
     class SceneGraph
     {
         List<GameObject> nots;
-        Model topNode;
+        public Model topNode;
         Model two;
         Model boi;
 
         public SceneGraph()
         {
             nots = new List<GameObject>();
-            topNode = new Model(Mesh.F16, 0.8f);
-            topNode.Texture = Texture.texF16;
-            topNode.MyScale = new Vector3(5f);
+            topNode = new Model(Mesh.Bunny, 0.8f);
+            topNode.Texture = Texture.texMetal;
+            topNode.MyScale = new Vector3(2f);
             Add(topNode);
             two = new Model(Mesh.TeaPot, 0.4f);
             boi = new Model(Mesh.Tyra, 0.1f);
