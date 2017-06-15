@@ -42,6 +42,8 @@ namespace template_P3
 
         public static Vector3 ambientCol = new Vector3(0.2f);
 
+        Skybox box;
+
         // initialize
         public void Init()
         {
@@ -49,7 +51,7 @@ namespace template_P3
             sceneGraph = new SceneGraph();
             sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
 
-            lights[0] = new Light(new Vector3(0, -10, 5), 220);
+            lights[0] = new Light(new Vector3(0, -10, 5), 120);
             lights[1] = new Light(new Vector3(-5, 0, -5), new Vector3(30f, 0f, 0f));
             lights[2] = new Light(new Vector3(5, 0f, -5), new Vector3(0f, 30f, 0f));
             lights[3] = new Light(new Vector3(0, 0f, -5), new Vector3(0f, 0f, 30f));
@@ -73,20 +75,7 @@ namespace template_P3
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
-            sceneGraph.Add(new Skybox(Mesh.Skybox) { Texture = Texture.skybox, MyScale = new Vector3(30f), Position = new Vector3(15) });
-
-            // pass the lightpos to the shader
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos1, Game.lightPos1.X, Game.lightPos1.Y, Game.lightPos1.Z );
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos2, Game.lightPos2.X, Game.lightPos2.Y, Game.lightPos2.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos3, Game.lightPos3.X, Game.lightPos3.Y, Game.lightPos3.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lpos4, Game.lightPos4.X, Game.lightPos4.Y, Game.lightPos4.Z);
-
-            // pass the lightcolors to the shader
-            GL.ProgramUniform3(shader.programID, shader.uniform_lcol1, Game.lightCol1.X, Game.lightCol1.Y, Game.lightCol1.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lcol2, Game.lightCol2.X, Game.lightCol2.Y, Game.lightCol2.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lcol3, Game.lightCol3.X, Game.lightCol3.Y, Game.lightCol3.Z);
-            GL.ProgramUniform3(shader.programID, shader.uniform_lcol4, Game.lightCol4.X, Game.lightCol4.Y, Game.lightCol4.Z);
-
+            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { Texture = Texture.skybox, MyScale = new Vector3(30f), Position = new Vector3(15) });
             //pass the light transformations to the shader
 
 
@@ -106,7 +95,6 @@ namespace template_P3
         // tick for background surface
         public void Tick()
         {
-            lights[1].Position += new Vector3(0, 0, 0.05f);
             Console.WriteLine(camera.Position);
             InputHandler.Update();
             camera.Update();

@@ -16,16 +16,6 @@ namespace template_P3
         public int uniform_2wrld;
         public int unifrom_amcol;
 
-        public int uniform_lpos1;
-        public int uniform_lpos2;
-        public int uniform_lpos3;
-        public int uniform_lpos4;
-
-        public int uniform_lcol1;
-        public int uniform_lcol2;
-        public int uniform_lcol3;
-        public int uniform_lcol4;
-
         public int[] uniform_lightPos = new int[4];
         public int[] uniform_lightCol = new int[4];
 
@@ -52,16 +42,6 @@ namespace template_P3
             uniform_mview = GL.GetUniformLocation(programID, "transform");
             uniform_2wrld = GL.GetUniformLocation(programID, "toWorld");
             unifrom_amcol = GL.GetUniformLocation(programID, "ambientCol");
-
-            uniform_lpos1 = GL.GetUniformLocation(programID, "lightPos1");
-            uniform_lpos2 = GL.GetUniformLocation(programID, "lightPos2");
-            uniform_lpos3 = GL.GetUniformLocation(programID, "lightPos3");
-            uniform_lpos4 = GL.GetUniformLocation(programID, "lightPos4");
-
-            uniform_lcol1 = GL.GetUniformLocation(programID, "lightCol1");
-            uniform_lcol2 = GL.GetUniformLocation(programID, "lightCol2");
-            uniform_lcol3 = GL.GetUniformLocation(programID, "lightCol3");
-            uniform_lcol4 = GL.GetUniformLocation(programID, "lightCol4");
 
             for (int i = 0; i < 4; i++)
             {

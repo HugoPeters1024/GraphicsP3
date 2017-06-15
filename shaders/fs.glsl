@@ -13,16 +13,6 @@ out vec4 outputColor;
 
 uniform vec3 ambientCol;
 
-uniform vec3 lightPos1;
-uniform vec3 lightPos2;
-uniform vec3 lightPos3;
-uniform vec3 lightPos4;
-
-uniform vec3 lightCol1;
-uniform vec3 lightCol2;
-uniform vec3 lightCol3;
-uniform vec3 lightCol4;
-
 uniform vec3 lightPos[4];
 uniform vec3 lightCol[4];
 
@@ -41,10 +31,12 @@ void main()
 	float attenuation;
 	float spec;
 
-        int i;
-	    for(i=0; i<4; i=i+1)
+    int i;
+	for(i=0; i<4; i=i+1)
         {
-            L = (camTrans * vec4(-lightPos[i], 1)).xyz - worldPos.xyz;
+                        vec3 l_position = lightPos[i];
+			vec3 l_color = lightCol[i];
+            		L = (camTrans * vec4(-l_position, 1)).xyz - worldPos.xyz;
 			dist = length(L);
 			L /= dist;
 			attenuation = 1.0f / (dist * dist);
@@ -52,7 +44,7 @@ void main()
 			spec = max(0, dot(r_camRay, L));
 			spec = pow(spec, 200);
 
-			outputColor += vec4( materialColor * max( 0.0f, dot( L, normal ) ) * attenuation * lightCol[i], 1 );
-			outputColor += vec4( materialColor * lightCol[i] * spec, 1) * gloss;
+			outputColor += vec4( materialColor * max( 0.0f, dot( L, normal ) ) * attenuation * l_color, 1 );
+			outputColor += vec4( materialColor * l_color * spec, 1) * gloss;
         }
 }
