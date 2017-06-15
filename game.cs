@@ -16,7 +16,7 @@ namespace template_P3
         public Surface screen;                  // background surface for printing etc.
         GameObject floor;                       // a mesh to draw using OpenGL
         SceneGraph sceneGraph;
-        const float PI = 3.1415926535f;         // PI
+        public const float PI = 3.1415926535f;         // PI
         float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
         Shader shader;                          // shader to use for rendering
@@ -63,19 +63,19 @@ namespace template_P3
             timer.Start();
 
             camera = new Camera();
+            
             // create shaders
             shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
             postproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_post.glsl");
-            // load a texture
-            wood = new Texture("../../assets/wood.jpg");
+            
             // create the render target
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
-            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { MyScale = new Vector3(30f), Position = new Vector3(15) });
+            // create a skybox
+            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { MyScale = new Vector3(0), Position = new Vector3(0) });
+
             //pass the light transformations to the shader
-
-
             GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, ambientCol.X, ambientCol.Y, ambientCol.Z);
 
             // pass the ambient lightcolor to the shader
@@ -97,6 +97,7 @@ namespace template_P3
             camera.Update();
             screen.Clear(0);
             screen.Print("hello world", 2, 2, 0xffff00);
+            box.Update(camera.Position, camera.SkyboxTransform);
         }
 
         // tick for OpenGL rendering code

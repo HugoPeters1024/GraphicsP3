@@ -26,7 +26,7 @@ namespace template_P3
         {
             base.Render(camera, shader);
 
-            myMesh.Render(shader, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture, this is Skybox);
+            myMesh.Render(shader, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture);
         }
 
         #region Properties
