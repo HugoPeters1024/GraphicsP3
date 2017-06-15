@@ -35,11 +35,12 @@ void main()
 	float attenuation;
 	float spec[4];
 
-        int i;
+    int i;
+	outputColor = vec4(0, 0, 0, 0);
 	for(i=0; i<4; i=i+1)
         {
 			l_trans = lightTrans[i];
-                        l_position = lightPos[i];
+			l_position = lightPos[i];
 			l_color = lightCol[i];
             		L = (camTrans * l_trans * vec4(-l_position, 1)).xyz - worldPos.xyz;
 			dist = length(L);
