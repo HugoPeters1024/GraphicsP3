@@ -27,6 +27,7 @@ namespace template_P3
         public static Mesh Tyra = new Mesh("../../assets/tyra.obj");
         public static Mesh Skybox = new Mesh("../../assets/skybox.obj");
         public static Mesh Human = new Mesh("../../assets/human.obj");
+        public static Mesh Quad = new Mesh("../../assets/floor.obj");
 
         // constructor
         public Mesh(string fileName)

@@ -80,7 +80,7 @@ namespace template_P3
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
-            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { Texture = Texture.skybox, MyScale = new Vector3(40f), Position = new Vector3(15) });
+            sceneGraph.Add(box = new Skybox(Mesh.Skybox) { MyScale = new Vector3(30f), Position = new Vector3(15) });
             //pass the light transformations to the shader
 
 
