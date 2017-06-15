@@ -33,7 +33,7 @@ void main()
 	vec3 L;
 	float dist;
 	float attenuation;
-	float spec;
+	float spec[4];
 
         int i;
 	for(i=0; i<4; i=i+1)
@@ -46,10 +46,16 @@ void main()
 			L /= dist;
 			attenuation = 1.0f / (dist * dist);
 			
-			spec = max(0.0, dot(r_camRay, L));
-			spec = pow(spec, 200);
+			spec[i] = max(0.0, dot(r_camRay, L));
+			spec[i] = pow(spec[i], 500);
 
 			outputColor += vec4( materialColor * max( 0.0f, dot( L, normal ) ) * attenuation * l_color, 1 );
-			outputColor += vec4( materialColor * l_color * spec * gloss, 1);
+			//outputColor += vec4( materialColor * l_color * spec * gloss, 1);
         }
+
+	vec4 factor = min(outputColor, 1);
+	for(i=0; i<4; i=i+1)
+	{
+		outputColor += factor * min(vec4(materialColor * lightCol[i] * spec[i], 1), 1) * gloss;
+	}
 }

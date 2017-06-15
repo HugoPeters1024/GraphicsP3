@@ -30,16 +30,6 @@ namespace template_P3
 
         public static Light[] lights = new Light[4];
 
-        public static Vector3 lightPos1 = new Vector3(0, -10, 5);
-        public static Vector3 lightPos2 = new Vector3(-5, 0 ,-5);
-        public static Vector3 lightPos3 = new Vector3(5, 0f, -5);
-        public static Vector3 lightPos4 = new Vector3(0, 0f, -5);
-
-        public static Vector3 lightCol1 = new Vector3(220);
-        public static Vector3 lightCol2 = new Vector3(30f, 0f, 0f);
-        public static Vector3 lightCol3 = new Vector3(0f, 30f, 0f);
-        public static Vector3 lightCol4 = new Vector3(0f, 0f, 30f);
-
         public static Vector3 ambientCol = new Vector3(0.2f);
 
         Skybox box;
@@ -51,16 +41,18 @@ namespace template_P3
             sceneGraph = new SceneGraph();
             sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
 
-            lights[0] = new Light(new Vector3(0, 0, 3), 120);
-            lights[1] = new Light(new Vector3(-5, 0, -5), new Vector3(30f, 0f, 0f));
-            lights[2] = new Light(new Vector3(5, 0f, -5), new Vector3(0f, 30f, 0f));
-            lights[3] = new Light(new Vector3(0, 0f, -5), new Vector3(0f, 0f, 30f));
+            lights[0] = new Light(new Vector3(0, 0, 3), 30);
+            lights[1] = new Light(new Vector3(-5, -5, -3), new Vector3(190f, 0f, 0f));
+            lights[2] = new Light(new Vector3(5, -5f, -3), new Vector3(0f, 190f, 0f));
+            lights[3] = new Light(new Vector3(0, -5f, -3), new Vector3(0f, 0f, 190f));
 
-            GameObject obj = new GameObject(new Vector3(0, -4, 3));
+            GameObject obj = new GameObject(new Vector3(0, -4, 0));
             obj.RotationSpeed = new Vector3(0, 0.01f, 0);
             for (int i = 1; i < lights.Length; i++)
-                sceneGraph.Add(obj);
+                sceneGraph.Add(lights[i]);
             obj.Add(lights[0]);
+            sceneGraph.Add(obj);
+            obj.RotationSpeed = new Vector3(0, 0.1f, 0);
 
 
 

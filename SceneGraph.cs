@@ -17,12 +17,12 @@ namespace template_P3
         public SceneGraph()
         {
             nots = new List<GameObject>();
-            topNode = new Model(Mesh.Bunny, 0.8f);
+            topNode = new Model(Mesh.Bunny, 1f);
             topNode.Texture = Texture.texMetal;
             topNode.MyScale = new Vector3(2f);
             Add(topNode);
-            two = new Model(Mesh.TeaPot, 0.4f);
-            boi = new Model(Mesh.Tyra, 0.1f);
+            two = new Model(Mesh.TeaPot, 1f);
+            boi = new Model(Mesh.Tyra, 1f);
             boi.MyScale = new Vector3(4f);
             topNode.Position = new Vector3(0, 0, 7);
             two.Position = new Vector3(0, 2, 10);
