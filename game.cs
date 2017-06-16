@@ -20,7 +20,7 @@ namespace template_P3
         float a = 0;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
         Shader shader;                          // shader to use for rendering
-        Camera camera;                           // a camera
+        Camera camera;                          // a camera
         Shader postproc;                        // shader to use for post processing
         Texture wood;                           // texture to use for rendering
         RenderTarget target;                    // intermediate render target

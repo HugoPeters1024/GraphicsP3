@@ -59,7 +59,7 @@ namespace template_P3
         }
 
         // render the mesh using the supplied shader and matrix
-        public void Render(Shader shader, Matrix4 transform, Matrix4 toWorld, Texture texture)
+        public void Render(Shader shader, Matrix4 transform, Matrix4 toWorld, Texture texture, Texture normalMap = null)
         {
             // on first run, prepare buffers
             Prepare(shader);
@@ -70,6 +70,14 @@ namespace template_P3
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2D, texture.id);
 
+            if (normalMap != null)
+            {
+                // enable normalmap
+                int normLoc = GL.GetUniformLocation(shader.programID, "normalMap");
+                GL.Uniform1(normLoc, 0);
+                GL.ActiveTexture(TextureUnit.Texture0);
+                GL.BindTexture(TextureTarget.Texture2D, normalMap.id);
+            }
 
             // enable shader
             GL.UseProgram(shader.programID);
@@ -80,8 +88,6 @@ namespace template_P3
             //pass transformations
             GL.UniformMatrix4(shader.uniform_mview, false, ref transform);
             GL.UniformMatrix4(shader.uniform_2wrld, false, ref toWorld);
-
-
 
             // bind interleaved vertex data
             GL.EnableClientState(ArrayCap.VertexArray);

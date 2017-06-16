@@ -88,9 +88,13 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="shaders\fs.glsl" />
+    <None Include="shaders\fs_normal.glsl" />
     <None Include="shaders\fs_post.glsl" />
+    <None Include="shaders\fs_skybox.glsl" />
     <None Include="shaders\vs.glsl" />
+    <None Include="shaders\vs_normal.glsl" />
     <None Include="shaders\vs_post.glsl" />
+    <None Include="shaders\vs_skybox.glsl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
