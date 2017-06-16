@@ -23,5 +23,5 @@ uniform mat4 camTrans;
 // fragment shader
 void main()
 {
-	outputColor = vec4( texture( pixels, uv ).xyz, 1 );
+	outputColor = vec4( texture( pixels, uv ).xyz * 2 - 0.3, 1 ); //constrast
 }

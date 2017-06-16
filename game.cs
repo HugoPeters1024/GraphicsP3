@@ -30,7 +30,7 @@ namespace template_P3
 
         public static Light[] lights = new Light[4];
 
-        public static Vector3 ambientCol = new Vector3(0.2f);
+        public static Vector3 ambientCol = new Vector3(1f, 1f, 1f);
 
         Skybox box;
 
@@ -53,6 +53,16 @@ namespace template_P3
             obj.Add(lights[0]);
             sceneGraph.Add(obj);
             obj.RotationSpeed = new Vector3(0, 0.1f, 0);
+
+            GameObject planeAnchor = new GameObject();
+            sceneGraph.Add(planeAnchor);
+            Model F16 = new Model(Mesh.F16, 1);
+            F16.Texture = Texture.texF16;
+            F16.Position = new Vector3(0, 0, 100);
+            F16.MyScale = new Vector3(30);
+            F16.Rotation = new Vector3(0.5f, 0, 0);
+            planeAnchor.Add(F16);
+            planeAnchor.RotationSpeed = new Vector3(0, -0.03f, 0);
 
 
 

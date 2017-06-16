@@ -17,7 +17,7 @@ namespace template_P3
         public Skybox(Mesh m, float gloss = 0f) : base(m, gloss)
         {
             skyboxShader = new Shader("../../shaders/vs_skybox.glsl", "../../shaders/fs_skybox.glsl");
-            radius = 100;
+            radius = 500;
 
             quadDown = new Model(Mesh.Quad);
             quadDown.Position = new Vector3(SkyboxPos + new Vector3(0, radius, 0));
