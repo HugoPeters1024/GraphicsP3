@@ -17,20 +17,21 @@ namespace template_P3
         GameObject floor;                       // a mesh to draw using OpenGL
         SceneGraph sceneGraph;
         public const float PI = 3.1415926535f;         // PI
-        float a = 0;                            // teapot rotation angle
+        public float Time;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
         Shader shader;                          // shader to use for rendering
         Camera camera;                           // a camera
         Shader postproc;                        // shader to use for post processing
-        Texture wood;                           // texture to use for rendering
+        Shader rainbowproc;
         RenderTarget target;                    // intermediate render target
         ScreenQuad quad;                        // screen filling quad for post processing
         Matrix4 camTrans;
-        bool useRenderTarget = false;
+        bool useRenderTarget = true;
 
-        public static Light[] lights = new Light[4];
+        public const int NUMBER_OF_LIGHTS = 5;
+        public static Light[] lights = new Light[5];
 
-        public static Vector3 ambientCol = new Vector3(1f, 1f, 1f);
+        public static Vector3 ambientCol = new Vector3(0.2f);
 
         Skybox box;
 
@@ -41,18 +42,19 @@ namespace template_P3
             sceneGraph = new SceneGraph();
             sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
 
-            lights[0] = new Light(new Vector3(0, 0, 3), 30);
+            lights[0] = new Light(new Vector3(0, 0, 5), 50);
             lights[1] = new Light(new Vector3(-5, -5, -3), new Vector3(190f, 0f, 0f));
             lights[2] = new Light(new Vector3(5, -5f, -3), new Vector3(0f, 190f, 0f));
             lights[3] = new Light(new Vector3(0, -5f, -3), new Vector3(0f, 0f, 190f));
+            lights[4] = new Light(new Vector3(0, -40, 10), new Vector3(800, 700, 1000) * 10); //SUN
 
-            GameObject obj = new GameObject(new Vector3(0, -4, 0));
+            GameObject obj = new GameObject(new Vector3(0, 0, 0));
             obj.RotationSpeed = new Vector3(0, 0.01f, 0);
-            for (int i = 1; i < lights.Length; i++)
+            for (int i = 1; i < NUMBER_OF_LIGHTS; i++)
                 sceneGraph.Add(lights[i]);
             obj.Add(lights[0]);
-            sceneGraph.Add(obj);
-            obj.RotationSpeed = new Vector3(0, 0.1f, 0);
+            sceneGraph.topNode.Add(obj);
+            obj.RotationSpeed = new Vector3(0.05f, 0, 0);
 
             GameObject planeAnchor = new GameObject();
             sceneGraph.Add(planeAnchor);
@@ -77,6 +79,7 @@ namespace template_P3
             // create shaders
             shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
             postproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_post.glsl");
+            rainbowproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_rainbow_post.glsl");
             
             // create the render target
             target = new RenderTarget(screen.width, screen.height);
@@ -102,20 +105,21 @@ namespace template_P3
         // tick for background surface
         public void Tick()
         {
+            Time += 1f;
             Console.WriteLine(camera.Position);
             InputHandler.Update();
             camera.Update();
             screen.Clear(0);
             screen.Print("hello world", 2, 2, 0xffff00);
-            box.Update(camera.Position, camera.SkyboxTransform);
         }
 
         // tick for OpenGL rendering code
         public void RenderGL()
         {
             GL.UseProgram(shader.programID);
+            GL.ProgramUniform1(postproc.programID, postproc.uniform_time, Time);
             //Push the lights to the shader
-            Matrix4[] trans = new Matrix4[4];
+            Matrix4[] trans = new Matrix4[NUMBER_OF_LIGHTS];
             for (int i=0; i<lights.Length; ++i)
             {
                 GL.Uniform3(shader.uniform_lightPos[i], lights[i].Position);
@@ -124,18 +128,17 @@ namespace template_P3
                 GL.UniformMatrix4(shader.uniform_lightTrans[i], false, ref trans[i]);
             }
 
-            GL.ProgramUniform3(shader.programID, shader.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);
+            //pass the camera positioin to the shader
+            GL.Uniform3(shader.uniform_cpos, Vector3.Zero);
             Matrix4 camTrans = camera.Transform;
             GL.UseProgram(shader.programID);
             GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans);
+            GL.ProgramUniform2(postproc.programID, postproc.uniform_camDelta, camera.RotationDelta.X, camera.RotationDelta.Y);
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
             timer.Start();
 
-            // update rotation
-            a += 0.001f * frameDuration;
-            if (a > 2 * PI) a -= 2 * PI;
 
             if (useRenderTarget)
             {
@@ -147,7 +150,8 @@ namespace template_P3
 
                 // render quad
                 target.Unbind();
-                quad.Render(postproc, target.GetTextureID());
+                quad.Render(postproc, target.GetTextureID());                
+                quad.Render(rainbowproc, target.GetTextureID());
             }
             else
             {

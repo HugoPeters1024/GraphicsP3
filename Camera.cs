@@ -14,6 +14,7 @@ namespace template_P3
     {
         Vector3 position;
         Vector3 rotation;
+        Vector3 prevRotation;
         static float walkSpeed = 0.1f;
         static float rotSpeed = 0.03f;
 
@@ -21,6 +22,7 @@ namespace template_P3
         {
             position = new Vector3(0, 0, 5);
             rotation = Vector3.Zero;
+            prevRotation = Vector3.Zero;
         }
 
 
@@ -29,7 +31,7 @@ namespace template_P3
             float sphereX = (float)(Math.Cos(rotation.Y));
             float sphereY = (float)(Math.Sin(rotation.Y));
             Vector3 sphereVec = new Vector3(sphereY, 0, sphereX);
-            Console.WriteLine(sphereVec);
+            Console.WriteLine(RotationDelta);
             #region Movement
             if (KeyDown(Key.W))
                 position -= sphereVec * walkSpeed;
@@ -45,6 +47,7 @@ namespace template_P3
             #endregion
 
             #region Rotation
+            prevRotation = rotation;
             if (KeyDown(Key.Left))
                 rotation += new Vector3(0, rotSpeed, 0);
 
@@ -70,6 +73,11 @@ namespace template_P3
         {
             get { return rotation; }
             set { rotation = value; }
+        }
+
+        public Vector3 RotationDelta
+        {
+            get { return rotation - prevRotation; }
         }
 
         public Matrix4 Transform

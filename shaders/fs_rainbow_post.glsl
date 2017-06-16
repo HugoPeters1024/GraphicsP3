@@ -13,26 +13,15 @@ out vec3 outputColor;
 
 #define M_PI 3.1415926535897932384626433832795
 #define nSteps 10
-#define colorSpread 0.002
+#define colorSpread 0.02
 
 void main()
 {
 	// retrieve input pixel
 	outputColor = texture( pixels, uv ).rgb;
 	// apply dummy postprocessing effect
-	float dx = P.x - 0.5, dy = P.y - 0.5;
-	float distance = sqrt( dx * dx + dy * dy );
-	outputColor *= sin( distance * 1.5 * M_PI ) * 0.25f + 0.75f;
-
-	for(float i=0; i<nSteps; i=i+1)
-	{
-		outputColor += texture(pixels, uv + (i/nSteps) * 2 * vec2(camDelta.y, camDelta.x)).rgb;
-	}
-	outputColor /= nSteps;
-
-	if (abs(dy) > 0.39)
-	     outputColor = vec3(0);
-   
+   	outputColor.b = texture(pixels, uv + vec2(0.01) ).b;
+	outputColor.g = 0;
 }
 
 // EOF

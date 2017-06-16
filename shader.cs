@@ -16,14 +16,17 @@ namespace template_P3
         public int uniform_2wrld;
         public int unifrom_amcol;
 
-        public int[] uniform_lightPos = new int[4];
-        public int[] uniform_lightCol = new int[4];
-        public int[] uniform_lightTrans = new int[4];
+        public int[] uniform_lightPos = new int[Game.NUMBER_OF_LIGHTS];
+        public int[] uniform_lightCol = new int[Game.NUMBER_OF_LIGHTS];
+        public int[] uniform_lightTrans = new int[Game.NUMBER_OF_LIGHTS];
 
         public int uniform_camTrans;
+        public int uniform_camDelta;
 
         public int uniform_cpos;
         public int uniform_gloss;
+
+        public int uniform_time;
 
 
         // constructor
@@ -44,7 +47,7 @@ namespace template_P3
             uniform_2wrld = GL.GetUniformLocation(programID, "toWorld");
             unifrom_amcol = GL.GetUniformLocation(programID, "ambientCol");
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Game.NUMBER_OF_LIGHTS; i++)
             {
                 uniform_lightPos[i] = GL.GetUniformLocation(programID, "lightPos[" + i.ToString() + "]");
                 uniform_lightCol[i] = GL.GetUniformLocation(programID, "lightCol[" + i.ToString() + "]");
@@ -52,9 +55,12 @@ namespace template_P3
             }
 
             uniform_camTrans = GL.GetUniformLocation(programID, "camTrans");
+            uniform_camDelta = GL.GetUniformLocation(programID, "camDelta");
 
             uniform_cpos = GL.GetUniformLocation(programID, "camPos");
             uniform_gloss = GL.GetUniformLocation(programID, "gloss");
+
+            uniform_time = GL.GetUniformLocation(programID, "time");
         }
 
     // loading shaders
