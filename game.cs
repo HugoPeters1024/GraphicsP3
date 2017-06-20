@@ -22,6 +22,7 @@ namespace template_P3
         Shader shader;                          // shader to use for rendering
         Camera camera;                          // a camera
         Shader postproc;                        // shader to use for post processing
+        public static Shader shaderNormal;   // shader to use for normal mapping
         Texture wood;                           // texture to use for rendering
         RenderTarget target;                    // intermediate render target
         ScreenQuad quad;                        // screen filling quad for post processing
@@ -39,7 +40,7 @@ namespace template_P3
         {
             InputHandler.Init();
             sceneGraph = new SceneGraph();
-            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
+            sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.metalTex, Gloss = 1f , NormalMap = Texture.metalNormal});
 
             lights[0] = new Light(new Vector3(0, 0, 3), 30);
             lights[1] = new Light(new Vector3(-5, -5, -3), new Vector3(190f, 0f, 0f));
@@ -77,7 +78,8 @@ namespace template_P3
             // create shaders
             shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
             postproc = new Shader("../../shaders/vs_post.glsl", "../../shaders/fs_post.glsl");
-            
+            shaderNormal = new Shader("../../shaders/vs_normal.glsl", "../../shaders/fs_normal.glsl");
+
             // create the render target
             target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
@@ -86,10 +88,11 @@ namespace template_P3
             sceneGraph.Add(box = new Skybox(Mesh.Skybox) { MyScale = new Vector3(0), Position = new Vector3(0) });
 
             //pass the light transformations to the shader
-            GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, ambientCol.X, ambientCol.Y, ambientCol.Z);
+            //GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, ambientCol.X, ambientCol.Y, ambientCol.Z);
 
             // pass the ambient lightcolor to the shader
             GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, Game.ambientCol.X, Game.ambientCol.Y, Game.ambientCol.Z);
+            GL.ProgramUniform3(shaderNormal.programID, shaderNormal.unifrom_amcol, Game.ambientCol.X, Game.ambientCol.Y, Game.ambientCol.Z);
 
             // pass the camera position to the shader
             GL.ProgramUniform3(shader.programID, shader.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);
@@ -128,6 +131,24 @@ namespace template_P3
             Matrix4 camTrans = camera.Transform;
             GL.UseProgram(shader.programID);
             GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans);
+
+
+
+            GL.UseProgram(shaderNormal.programID);
+            //Push the lights to the shader
+            for (int i = 0; i < lights.Length; ++i)
+            {
+                GL.Uniform3(shaderNormal.uniform_lightPos[i], lights[i].Position);
+                GL.Uniform3(shaderNormal.uniform_lightCol[i], lights[i].Intensity);
+                GL.UniformMatrix4(shader.uniform_lightTrans[i], false, ref trans[i]);
+            }
+
+            GL.ProgramUniform3(shaderNormal.programID, shaderNormal.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);
+            GL.UseProgram(shaderNormal.programID);
+            GL.UniformMatrix4(shaderNormal.uniform_camTrans, false, ref camTrans);
+
+
+
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();

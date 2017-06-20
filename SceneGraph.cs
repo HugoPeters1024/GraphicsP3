@@ -18,8 +18,9 @@ namespace template_P3
         {
             nots = new List<GameObject>();
             topNode = new Model(Mesh.Bunny, 1f);
-            topNode.Texture = Texture.texMetal;
+            topNode.Texture = Texture.metalTex;
             topNode.MyScale = new Vector3(2f);
+            //topNode.NormalMap = Texture.normalBrick;
             Add(topNode);
             two = new Model(Mesh.TeaPot, 1f);
             boi = new Model(Mesh.Tyra, 1f);

@@ -10,9 +10,9 @@ public class Texture
 	// data members
 	public int id;
         public static Texture White = new Texture("../../assets/textures/White.png");
-        public static Texture texWood = new Texture("../../assets/textures/wood.jpg");
+        public static Texture woodTex = new Texture("../../assets/textures/wood.jpg");
         public static Texture texF16 = new Texture("../../assets/textures/F16s.png");
-        public static Texture texMetal = new Texture("../../assets/textures/metal.jpg");
+        public static Texture metalTex = new Texture("../../assets/textures/metal.jpg");
 
         public static Texture skyboxDown = new Texture("../../assets/textures/skybox/bottom.jpg");
         public static Texture skyboxUp = new Texture("../../assets/textures/skybox/top.jpg");
@@ -21,6 +21,8 @@ public class Texture
         public static Texture skyboxFront = new Texture("../../assets/textures/skybox/back.jpg");
         public static Texture skyboxBack = new Texture("../../assets/textures/skybox/front.jpg");
 
+        public static Texture brickNormal = new Texture("../../assets/textures/normal/brick.png");
+        public static Texture metalNormal = new Texture("../../assets/textures/normal/metal.jpg");
 
         // constructor
         public Texture( string filename )

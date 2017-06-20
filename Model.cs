@@ -14,14 +14,13 @@ namespace template_P3
         Vector3 myScale;
         Texture texture;
         Texture normalMap;
-        Shader normalMapShader = new Shader("../../shaders/vs_normal.glsl", "../../shaders/fs_normal.glsl");
 
         public Model(Mesh m, float gloss = 0f) : base()
         {
             myMesh = m;
             myMesh.gloss = gloss;
             myScale = Vector3.One;
-            texture = Texture.texWood;
+            texture = Texture.woodTex;
         }
 
         public override void Render(Matrix4 camera, Shader shader)
@@ -30,7 +29,7 @@ namespace template_P3
             if (normalMap == null)
                 myMesh.Render(shader, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture);
             else
-                myMesh.Render(normalMapShader, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture, normalMap);
+                myMesh.Render(Game.shaderNormal, Matrix4.CreateScale(myScale) * transform, Matrix4.CreateScale(myScale) * toWorld, texture, normalMap);
         }
 
         #region Properties

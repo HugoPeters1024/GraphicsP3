@@ -64,23 +64,30 @@ namespace template_P3
             // on first run, prepare buffers
             Prepare(shader);
 
+            // enable shader
+            GL.UseProgram(shader.programID);
+
             // enable texture
             int texLoc = GL.GetUniformLocation(shader.programID, "pixels");
             GL.Uniform1(texLoc, 0);
-            GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2D, texture.id);
 
+            // enable normalMap if not null
             if (normalMap != null)
             {
-                // enable normalmap
                 int normLoc = GL.GetUniformLocation(shader.programID, "normalMap");
-                GL.Uniform1(normLoc, 0);
-                GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2D, normalMap.id);
+                GL.Uniform1(normLoc, 1);
             }
 
-            // enable shader
-            GL.UseProgram(shader.programID);
+            //bind texture
+            GL.ActiveTexture(TextureUnit.Texture0 + 0);
+            GL.BindTexture(TextureTarget.Texture2D, texture.id);
+
+            //bind normalMap if not null
+            if (normalMap != null)
+            {
+                GL.ActiveTexture(TextureUnit.Texture0 + 1);
+                GL.BindTexture(TextureTarget.Texture2D, normalMap.id);
+            }
 
             //pass gloss;
             GL.Uniform1(shader.uniform_gloss, gloss);
