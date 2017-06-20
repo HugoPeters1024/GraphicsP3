@@ -13,8 +13,9 @@ namespace template_P3
     class Camera
     {
         Vector3 position;
-        Vector3 rotation;
+        Vector3 rotation, rotationExtern;
         Vector3 prevRotation;
+        List<Vector3> rotationDeltaSmooth;
         static float walkSpeed = 0.1f;
         static float rotSpeed = 0.03f;
 
@@ -22,7 +23,9 @@ namespace template_P3
         {
             position = new Vector3(0, 0, 5);
             rotation = Vector3.Zero;
+            rotationExtern = Vector3.Zero;
             prevRotation = Vector3.Zero;
+            rotationDeltaSmooth = new List<Vector3>();
         }
 
 
@@ -31,7 +34,7 @@ namespace template_P3
             float sphereX = (float)(Math.Cos(rotation.Y));
             float sphereY = (float)(Math.Sin(rotation.Y));
             Vector3 sphereVec = new Vector3(sphereY, 0, sphereX);
-            Console.WriteLine(RotationDelta);
+
             #region Movement
             if (KeyDown(Key.W))
                 position -= sphereVec * walkSpeed;
@@ -46,19 +49,31 @@ namespace template_P3
                 position += Vector3.Cross(Vector3.UnitY, sphereVec) * walkSpeed;
             #endregion
 
+
+
             #region Rotation
-            prevRotation = rotation;
+            prevRotation = rotation - rotationExtern;
+            rotationExtern = Vector3.Zero;
+
+            //smooth rotation
+            rotationDeltaSmooth.Insert(0, new Vector3(RotationDelta));
+            if (rotationDeltaSmooth.Count > 6)
+                rotationDeltaSmooth.RemoveAt(rotationDeltaSmooth.Count - 1);
+
+            rotation -= RotationDeltaSmooth;
+
             if (KeyDown(Key.Left))
-                rotation += new Vector3(0, rotSpeed, 0);
+                Rotation += new Vector3(0, rotSpeed, 0);
 
             if (KeyDown(Key.Right))
-                rotation -= new Vector3(0, rotSpeed, 0);
+                Rotation -= new Vector3(0, rotSpeed, 0);
 
             if (KeyDown(Key.Up))
-                rotation += new Vector3(rotSpeed, 0, 0);
+                Rotation += new Vector3(rotSpeed, 0, 0);
 
             if (KeyDown(Key.Down))
-                rotation -= new Vector3(rotSpeed, 0, 0);
+                Rotation -= new Vector3(rotSpeed, 0, 0);
+
             #endregion
         }
 
@@ -72,12 +87,23 @@ namespace template_P3
         public Vector3 Rotation
         {
             get { return rotation; }
-            set { rotation = value; }
+            set { rotationExtern += rotation - value; }
         }
 
         public Vector3 RotationDelta
         {
             get { return rotation - prevRotation; }
+        }
+
+        public Vector3 RotationDeltaSmooth
+        {
+            get
+            {
+                Vector3 sum = Vector3.Zero;
+                for (int i = 0; i < rotationDeltaSmooth.Count; ++i)
+                    sum += rotationDeltaSmooth[i];
+                return sum / rotationDeltaSmooth.Count;
+            }
         }
 
         public Matrix4 Transform

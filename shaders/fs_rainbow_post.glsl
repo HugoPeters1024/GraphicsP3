@@ -19,9 +19,20 @@ void main()
 {
 	// retrieve input pixel
 	outputColor = texture( pixels, uv ).rgb;
-	// apply dummy postprocessing effect
-   	outputColor.b = texture(pixels, uv + vec2(0.01) ).b;
-	outputColor.g = 0;
+	float dx = P.x - 0.5, dy = P.y - 0.5;
+	float distance = sqrt( dx * dx + dy * dy );
+	
+
+	//Color shift
+   	outputColor.b = texture(pixels, uv + P * distance * colorSpread).b;
+	outputColor.g = texture(pixels, uv + P * distance * colorSpread ).g;
+
+
+	//Wide Screen
+	if (abs(dy) > 0.39)
+	     outputColor = vec3(0);
+
+	
 }
 
 // EOF

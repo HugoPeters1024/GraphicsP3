@@ -14,6 +14,7 @@ out vec3 outputColor;
 #define M_PI 3.1415926535897932384626433832795
 #define nSteps 10
 #define colorSpread 0.002
+#define motionBlur 0.5
 
 void main()
 {
@@ -26,12 +27,9 @@ void main()
 
 	for(float i=0; i<nSteps; i=i+1)
 	{
-		outputColor += texture(pixels, uv + (i/nSteps) * 2 * vec2(camDelta.y, camDelta.x)).rgb;
+		outputColor += texture(pixels, uv + (i/nSteps) * 2 * vec2(camDelta.y, camDelta.x)*motionBlur).rgb;
 	}
 	outputColor /= nSteps;
-
-	if (abs(dy) > 0.39)
-	     outputColor = vec3(0);
    
 }
 

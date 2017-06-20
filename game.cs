@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System;
+using System.Windows;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -23,13 +24,16 @@ namespace template_P3
         Camera camera;                           // a camera
         Shader postproc;                        // shader to use for post processing
         Shader rainbowproc;
-        RenderTarget target;                    // intermediate render target
+        RenderTarget target, target2;            // intermediate render target
         ScreenQuad quad;                        // screen filling quad for post processing
         Matrix4 camTrans;
         bool useRenderTarget = true;
 
         public const int NUMBER_OF_LIGHTS = 5;
         public static Light[] lights = new Light[5];
+
+        public static int Width = 0;
+        public static int Height = 0;
 
         public static Vector3 ambientCol = new Vector3(0.2f);
 
@@ -38,7 +42,10 @@ namespace template_P3
         // initialize
         public void Init()
         {
-            InputHandler.Init();
+            Game.Width = screen.width;
+            Game.Height = screen.height;
+            camera = new Camera();
+            InputHandler.Init(camera);
             sceneGraph = new SceneGraph();
             sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
 
@@ -56,6 +63,7 @@ namespace template_P3
             sceneGraph.topNode.Add(obj);
             obj.RotationSpeed = new Vector3(0.05f, 0, 0);
 
+
             GameObject planeAnchor = new GameObject();
             sceneGraph.Add(planeAnchor);
             Model F16 = new Model(Mesh.F16, 1);
@@ -65,16 +73,15 @@ namespace template_P3
             F16.Rotation = new Vector3(0.5f, 0, 0);
             planeAnchor.Add(F16);
             planeAnchor.RotationSpeed = new Vector3(0, -0.03f, 0);
-
-
-
+    
             
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
             timer.Start();
 
-            camera = new Camera();
+
+            
             
             // create shaders
             shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
@@ -83,6 +90,7 @@ namespace template_P3
             
             // create the render target
             target = new RenderTarget(screen.width, screen.height);
+            target2 = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
             // create a skybox
@@ -106,7 +114,6 @@ namespace template_P3
         public void Tick()
         {
             Time += 1f;
-            Console.WriteLine(camera.Position);
             InputHandler.Update();
             camera.Update();
             screen.Clear(0);
@@ -133,7 +140,7 @@ namespace template_P3
             Matrix4 camTrans = camera.Transform;
             GL.UseProgram(shader.programID);
             GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans);
-            GL.ProgramUniform2(postproc.programID, postproc.uniform_camDelta, camera.RotationDelta.X, camera.RotationDelta.Y);
+            GL.ProgramUniform2(postproc.programID, postproc.uniform_camDelta, camera.RotationDeltaSmooth.X, camera.RotationDeltaSmooth.Y);
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
@@ -150,8 +157,10 @@ namespace template_P3
 
                 // render quad
                 target.Unbind();
-                quad.Render(postproc, target.GetTextureID());                
-                quad.Render(rainbowproc, target.GetTextureID());
+                target2.Bind();
+                quad.Render(postproc, target.GetTextureID());
+                target2.Unbind();            
+                quad.Render(rainbowproc, target2.GetTextureID());
             }
             else
             {
