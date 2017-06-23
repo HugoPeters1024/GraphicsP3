@@ -22,7 +22,7 @@ void main()
 	// apply dummy postprocessing effect
 	float dx = P.x - 0.5, dy = P.y - 0.5;
 	float distance = sqrt( dx * dx + dy * dy );
-	outputColor *= sin( distance * 1.5 * M_PI ) * 0.25f + 0.75f;
+	//outputColor *= sin( distance * 100 ) * 0.25f * pow(texture(pixels, vec2(0.5)).b, 10) + 0.75f;
 
 	for(float i=0; i<nSteps; i=i+1)
 	{

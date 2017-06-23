@@ -27,6 +27,8 @@ void main()
    	outputColor.b = texture(pixels, uv + P * distance * colorSpread).b;
 	outputColor.g = texture(pixels, uv + P * distance * colorSpread ).g;
 
+	//Vignetting
+	outputColor *= pow(cos(distance * 2), 0.7);
 
 	//Wide Screen
 	if (abs(dy) > 0.39)
