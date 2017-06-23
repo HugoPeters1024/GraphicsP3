@@ -65,37 +65,38 @@ namespace template_P3
             set { children = value; }
         }
 
-        public GameObject Parent
+        public virtual GameObject Parent
         {
             get { return parent; }
+            set { parent = value; }
         }
 
-        public Vector3 Rotation
+        public virtual Vector3 Rotation
         {
             get { return rotation; }
             set { rotation = value; }
         }
 
-        public Vector3 RotationSpeed
+        public virtual Vector3 RotationSpeed
         {
             get { return rotationSpeed; }
             set { rotationSpeed = value; }
         }
 
-        public Vector3 Position
+        public virtual Vector3 Position
         {
             get { return position; }
             set { position = value; }
         }
 
-        public Vector3 TranslationSpeed
+        public virtual Vector3 TranslationSpeed
         {
             get { return translationSpeed; }
             set { translationSpeed = value; }
         }
 
         #region Transformations
-        public Matrix4 LocalTransform
+        public virtual Matrix4 LocalTransform
         {
             get { return LocalScale * LocalRotation * LocalTranslation; }
         }

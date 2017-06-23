@@ -10,19 +10,17 @@ using static template_P3.InputHandler;
 
 namespace template_P3
 {
-    class Camera
+    class Camera : GameObject
     {
-        Vector3 position;
-        Vector3 rotation, rotationExtern;
+        Vector3 rotationExtern;
         Vector3 prevRotation;
         List<Vector3> rotationDeltaSmooth;
         static float walkSpeed = 0.1f;
         static float rotSpeed = 0.03f;
 
-        public Camera()
+        public Camera() : base()
         {
             position = new Vector3(0, 0, 5);
-            rotation = Vector3.Zero;
             rotationExtern = Vector3.Zero;
             prevRotation = Vector3.Zero;
             rotationDeltaSmooth = new List<Vector3>();
@@ -78,13 +76,7 @@ namespace template_P3
         }
 
         #region Properties
-        public Vector3 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
-
-        public Vector3 Rotation
+        public override Vector3 Rotation
         {
             get { return rotation; }
             set { rotationExtern += rotation - value; }
@@ -106,14 +98,29 @@ namespace template_P3
             }
         }
 
+        public Matrix4 ParentTransform
+        {
+            get
+            {
+                if (parent == null)
+                    return Matrix4.Identity;
+                else
+                    return parent.GlobalTransform;
+            }
+        }
+
         public Matrix4 Transform
         {
             get
             {
-                return Matrix4.CreateTranslation(-position) *
-                    Matrix4.CreateRotationZ(-rotation.Z) *
-                    Matrix4.CreateRotationY(-rotation.Y) *
-                    Matrix4.CreateRotationX(-rotation.X);
+                return
+                Matrix4.CreateTranslation(-ParentTransform.ExtractTranslation()) *
+                Matrix4.CreateFromQuaternion(ParentTransform.ExtractRotation().Inverted()) *
+                                Matrix4.CreateTranslation(-position) *
+                Matrix4.CreateRotationZ(-Rotation.Z) *
+                Matrix4.CreateRotationY(-Rotation.Y) *
+                Matrix4.CreateRotationX(-Rotation.X);
+
             }
         }
 

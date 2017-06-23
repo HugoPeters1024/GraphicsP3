@@ -20,13 +20,13 @@ namespace template_P3
             GL.Enable(EnableCap.Texture2D);
             GL.Disable(EnableCap.DepthTest);
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
-            GL.CullFace(CullFaceMode.Back);
+            GL.CullFace(CullFaceMode.FrontAndBack);
             ClientSize = new Size(640, 480);
             game = new Game();
             game.screen = new Surface(Width, Height);
             Sprite.target = game.screen;
             screenID = game.screen.GenTexture();
-            game.Init();
+            game.Init(); 
         }
         protected override void OnUnload(EventArgs e)
         {
@@ -93,6 +93,11 @@ namespace template_P3
             // entry point
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US"); // thanks Mathijs
             using (OpenTKApp app = new OpenTKApp()) { app.Run(30.0, 0.0); }
+        }
+
+        public bool WindowActive
+        {
+            get { return this.WindowActive; }
         }
     }
 

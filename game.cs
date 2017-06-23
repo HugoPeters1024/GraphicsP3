@@ -18,7 +18,7 @@ namespace template_P3
         GameObject floor;                       // a mesh to draw using OpenGL
         SceneGraph sceneGraph;
         public const float PI = 3.1415926535f;         // PI
-        public float Time;                            // teapot rotation angle
+        public static float Time;                            // teapot rotation angle
         Stopwatch timer;                        // timer for measuring frame duration
         Shader shader;                          // shader to use for rendering
         Camera camera;                           // a camera
@@ -28,6 +28,9 @@ namespace template_P3
         ScreenQuad quad;                        // screen filling quad for post processing
         Matrix4 camTrans;
         bool useRenderTarget = true;
+
+        GameObject planeAnchor;
+        Model F16;
 
         public const int NUMBER_OF_LIGHTS = 5;
         public static Light[] lights = new Light[5];
@@ -44,7 +47,7 @@ namespace template_P3
         {
             Game.Width = screen.width;
             Game.Height = screen.height;
-            camera = new Camera();
+            camera = new Camera() { Position = new Vector3(0, 10, 0) };
             InputHandler.Init(camera);
             sceneGraph = new SceneGraph();
             sceneGraph.Add(floor = new Model(new Mesh("../../assets/floor.obj")) { Position = new Vector3(0, 3.5f, 0), Scale = new Vector3(1), Texture = Texture.texMetal, Gloss = 1f });
@@ -56,23 +59,26 @@ namespace template_P3
             lights[4] = new Light(new Vector3(0, -40, 10), new Vector3(800, 700, 1000) * 10); //SUN
 
             GameObject obj = new GameObject(new Vector3(0, 0, 0));
-            obj.RotationSpeed = new Vector3(0, 0.01f, 0);
             for (int i = 1; i < NUMBER_OF_LIGHTS; i++)
                 sceneGraph.Add(lights[i]);
             obj.Add(lights[0]);
             sceneGraph.topNode.Add(obj);
-            obj.RotationSpeed = new Vector3(0.05f, 0, 0);
+            obj.RotationSpeed = new Vector3(0.03f, 0, 0);
 
 
-            GameObject planeAnchor = new GameObject();
+            planeAnchor = new GameObject();
             sceneGraph.Add(planeAnchor);
-            Model F16 = new Model(Mesh.F16, 1);
+            F16 = new Model(Mesh.F16, 1);
             F16.Texture = Texture.texF16;
-            F16.Position = new Vector3(0, 0, 100);
+            F16.Position = new Vector3(0, 5, 100);
             F16.MyScale = new Vector3(30);
-            F16.Rotation = new Vector3(0.5f, 0, 0);
+            F16.Rotation = new Vector3(0.7f, 0, 0);
             planeAnchor.Add(F16);
             planeAnchor.RotationSpeed = new Vector3(0, -0.03f, 0);
+            F16.Add(camera);
+            InputHandler.LinkedObject = F16;
+            
+
     
             
             // initialize stopwatch
@@ -103,10 +109,11 @@ namespace template_P3
             GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, Game.ambientCol.X, Game.ambientCol.Y, Game.ambientCol.Z);
 
             // pass the camera position to the shader
-            GL.ProgramUniform3(shader.programID, shader.uniform_cpos, -camera.Position.X, -camera.Position.Y, -camera.Position.Z);
+            /*
+            GL.ProgramUniform3(shader.programID, shader.uniform_cpos, camera.Position.X, camera.Position.Y, camera.Position.Z);
             camTrans = camera.Transform;
             GL.UseProgram(shader.programID);
-            GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans);
+            GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans); */
 
         }
 
@@ -137,7 +144,7 @@ namespace template_P3
 
             //pass the camera positioin to the shader
             GL.Uniform3(shader.uniform_cpos, Vector3.Zero);
-            Matrix4 camTrans = camera.Transform;
+            camTrans = camera.Transform;
             GL.UseProgram(shader.programID);
             GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans);
             GL.ProgramUniform2(postproc.programID, postproc.uniform_camDelta, camera.RotationDeltaSmooth.X, camera.RotationDeltaSmooth.Y);

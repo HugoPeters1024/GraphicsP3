@@ -17,6 +17,7 @@ namespace template_P3
         static MouseState mState;
         static Camera camera;
         static Vector2 mPos, prevMPos;
+        static GameObject linkedObject;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr FindWindow(string strClassName, string strWindowName);
@@ -27,6 +28,7 @@ namespace template_P3
         public static void Init(Camera camera)
         {
             InputHandler.camera = camera;
+            InputHandler.linkedObject = camera;
             kbState = Keyboard.GetState();
             kbStatePrev = kbState;
             mState = Mouse.GetCursorState();
@@ -46,11 +48,30 @@ namespace template_P3
             mPos = new Vector2(mState.X, mState.Y) - new Vector2(window.X, window.Y);
 
             Vector2 deltaMouse = (mPos - prevMPos)/120f;
-            Console.WriteLine(deltaMouse);
+            //Console.WriteLine(deltaMouse);
             camera.Rotation -= new Vector3(deltaMouse.Y, deltaMouse.X, 0);
-
             Mouse.SetPosition(Game.Width / 2 + window.X, Game.Height / 2 + window.Y);
             mPos = prevMPos;
+
+            if (KeyDown(Key.Comma))
+                linkedObject.Rotation -= new Vector3(0.02f, 0, 0f);
+
+            if (KeyDown(Key.Period))
+                linkedObject.Rotation += new Vector3(0.02f, 0, 0);
+
+            if (KeyPressed(Key.L))
+            {
+                if (camera.Parent == null)
+                {
+                    camera.Parent = linkedObject;
+                    camera.Position = new Vector3(0, 10, 0);
+                }
+                else
+                {
+                    camera.Parent = null;
+                    camera.Position = new Vector3(0, 1, 0);
+                }
+            }
         }
 
         public struct Rect
@@ -77,6 +98,12 @@ namespace template_P3
         public static bool KeyPressed(Key key)
         {
             return kbState.IsKeyDown(key) && !kbStatePrev.IsKeyDown(key);
+        }
+
+        public static GameObject LinkedObject
+        {
+            get { return linkedObject; }
+            set { linkedObject = value; }
         }
     }
 }
