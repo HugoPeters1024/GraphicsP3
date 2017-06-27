@@ -1,3 +1,11 @@
+SCENE GRAPH:
+
+GameObject is defined with a parent pointer and a list of children.
+Every GameObject inherets the transformations of all it's parents.
+You can see this in the demo as the teapot that spins around the bunny, and
+the T-rex that spin around the bunny.
+This setup is movement wise analogous to the sun, earth and moon.
+
 BONUS ASSIGNMENTS:
 
 -Multiple light instances whose positions, colors and intensity's can
