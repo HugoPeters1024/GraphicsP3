@@ -1,3 +1,14 @@
+Graphics practicum 3
+
+By:
+
+Hugo Peters	        5917727
+
+Nikita van den Berg     5825083
+
+Max van Gogh	        5822904
+
+
 SCENE GRAPH:
 
 GameObject is defined with a parent pointer and a list of children.
@@ -11,7 +22,7 @@ BONUS ASSIGNMENTS:
 -Multiple light instances whose positions, colors and intensity's can
 be modified at run-time.
 
--A cube map that manifests itself as a huge skybox that move along with
+-A cube map that manifests itself as a huge skybox that moves along with
 the camera, creating the illusion of an enormous world.
 
 -A cosine function using the distance from the center to create a vignette.
