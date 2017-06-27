@@ -77,17 +77,11 @@ namespace template_P3
             planeAnchor.RotationSpeed = new Vector3(0, -0.03f, 0);
             F16.Add(camera);
             InputHandler.LinkedObject = F16;
-            
-
-    
-            
+           
             // initialize stopwatch
             timer = new Stopwatch();
             timer.Reset();
-            timer.Start();
-
-
-            
+            timer.Start();            
             
             // create shaders
             shader = new Shader("../../shaders/vs.glsl", "../../shaders/fs.glsl");
@@ -107,14 +101,6 @@ namespace template_P3
 
             // pass the ambient lightcolor to the shader
             GL.ProgramUniform3(shader.programID, shader.unifrom_amcol, Game.ambientCol.X, Game.ambientCol.Y, Game.ambientCol.Z);
-
-            // pass the camera position to the shader
-            /*
-            GL.ProgramUniform3(shader.programID, shader.uniform_cpos, camera.Position.X, camera.Position.Y, camera.Position.Z);
-            camTrans = camera.Transform;
-            GL.UseProgram(shader.programID);
-            GL.UniformMatrix4(shader.uniform_camTrans, false, ref camTrans); */
-
         }
 
         // tick for background surface

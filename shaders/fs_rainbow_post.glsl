@@ -23,7 +23,7 @@ void main()
 	float distance = sqrt( dx * dx + dy * dy );
 	
 
-	//Color shift
+	//Color Abbreaviation
    	outputColor.b = texture(pixels, uv + P * distance * colorSpread).b;
 	outputColor.g = texture(pixels, uv + P * distance * colorSpread ).g;
 
@@ -31,7 +31,7 @@ void main()
 	outputColor *= pow(cos(distance * 2), 0.7);
 
 	//Wide Screen
-	if (abs(dy) > 0.39)
+	if (abs(dy) > 0.40)
 	     outputColor = vec3(0);
 
 	

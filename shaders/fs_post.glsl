@@ -22,8 +22,10 @@ void main()
 	// apply dummy postprocessing effect
 	float dx = P.x - 0.5, dy = P.y - 0.5;
 	float distance = sqrt( dx * dx + dy * dy );
-	//outputColor *= sin( distance * 100 ) * 0.25f * pow(texture(pixels, vec2(0.5)).b, 10) + 0.75f;
 
+
+	//Apply motion blur in the direction of the camera movement
+	//by blurring a number of pixels over a directional vector
 	for(float i=0; i<nSteps; i=i+1)
 	{
 		outputColor += texture(pixels, uv + (i/nSteps) * 2 * vec2(camDelta.y, camDelta.x)*motionBlur).rgb;
