@@ -17,6 +17,14 @@ the camera, creating the illusion of an enormous world.
 -A cosine function using the distance from the center to create a vignette.
 -Color aberration out from the center.
 
+-Smooth camera movement. The camera will move with the average of the last 6 registered
+rotation delta's. This leads to a very smooth and pleasing movement.
+
+-Mouse controlled camera movement. The distance of the mouse to the center is a
+factor for camera rotation. Every frame the mouse will be resetted to the center of
+the application. This results in an experience that is so familair from popular 3d games.
+Obviously this feature profits heavily from the previously stated smooth movement feature.
+
 -Motion blur that uses the delta rotation of the camera as a 2D vector to blur
 n pixels linearly interpolated over that vector. n is by default defined as 10 but
 can be increased for a raise in quality.
@@ -25,3 +33,5 @@ can be increased for a raise in quality.
 objects to create a link. In this demo you can press the L-key to switch between
 indepent movement or linking yourself to the F16 aircraft.
 Similarly you can bank the aircraft with the ',' and '.' keys.
+
+-Finally the camera can be controlled with WSAD giving the illusion of movement.
